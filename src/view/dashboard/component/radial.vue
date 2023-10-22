@@ -18,7 +18,7 @@ export default {
           {
             "key|+1": 1,
             name: function () {
-              return "PXHD" + this.key;
+              return "" + this.key;
             },
             "star|500-5000": 0,
           },
@@ -28,7 +28,6 @@ export default {
         container: chartContainer,
         autoFit: true,
       });
-      chart.title({ title: "玉珏统计" });
       chart.coordinate({ type: "radial", endAngle: Math.PI });
 
       chart

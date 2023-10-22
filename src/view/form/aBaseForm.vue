@@ -3,7 +3,7 @@
     <page-layout>
       <page-header
         :title="title"
-        describe="评估一个人的心血管耐力、肌肉力量、柔韧性、平衡性、协调性等方面的状况，以及是否存在运动风险。"
+        describe="生成综合评审结果和分析报告，为项目申请者和决策者提供参考，帮助他们做出更明智的决策。"
       ></page-header>
     </page-layout>
     <page-layout>

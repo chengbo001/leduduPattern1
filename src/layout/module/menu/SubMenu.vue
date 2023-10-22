@@ -6,6 +6,7 @@
     {{ item.meta.title }}
     <!-- t(item.meta.i18n) 换为 meta.title -->
   </a-menu-item>
+
   <a-menu-item
     :key="item.children[0].path"
     v-else-if="
@@ -17,6 +18,7 @@
     </template>
     {{ item.children[0].meta.title }}
   </a-menu-item>
+
   <a-sub-menu :key="item.path" v-else>
     <template #icon>
       <p-icon :type="item.meta.icon" />
@@ -24,6 +26,7 @@
     <template #title>
       {{ item.meta.title }}
     </template>
+
     <template v-for="child in item.children" :key="child.path">
       <sub-menu v-if="!child.hidden" :item="child"></sub-menu>
     </template>
@@ -54,3 +57,16 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+// 修改菜单字体样式
+.ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content,
+.ant-menu-inline.ant-menu-root
+  .ant-menu-submenu-title
+  > .ant-menu-title-content {
+  color: #475f7b;
+  font-size: 15px;
+  font-family: -apple-system, Rubik, "PingFang SC", "Microsoft YaHei",
+    "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+}
+</style>

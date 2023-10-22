@@ -1,4 +1,5 @@
 <template>
+  <!-- 柱状图 -->
   <div :id="chartContainer" style="width: 100%; height: 520px"></div>
 </template>
 

@@ -2,15 +2,11 @@
   <!-- 表格 + 预警处理统计 用于实时监控等情况 -->
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="利用机器学习算法，预测设备可能出现的问题，从而提前采取维护措施，减少停机时间和生产损失。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-card style="text-align: center">
-        <a-result title="预测将出现问题，请及时查看" style="padding: 0">
-        </a-result>
+        <a-result title="出现风险，请及时查看" style="padding: 0"> </a-result>
       </a-card>
       <div style="height: 10px"></div>
       <a-row :gutter="10">
@@ -28,6 +24,7 @@
                 <a-button type="primary">检索</a-button>
               </a-form-item>
             </a-form>
+            <div style="height: 10px"></div>
             <p-table
               :fetch="fetch"
               :columns="columns"
@@ -39,12 +36,31 @@
               <template #name="{ record }">
                 {{ record.name }}
               </template>
+              <template #grade="{ record }">
+                <a-tag color="red">{{ record.grade }}</a-tag>
+              </template>
             </p-table>
           </a-card>
         </a-col>
-        <a-col :span="6">
+        <!-- <a-col :span="6">
           <a-card>
             <gauge1></gauge1>
+          </a-card>
+        </a-col> -->
+        <a-col :span="6">
+          <a-card>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+                height: 400px;
+              "
+            >
+              <a-spin size="large" />
+              <span style="line-height: 60px">持续分析中···</span>
+            </div>
           </a-card>
         </a-col>
       </a-row>
@@ -57,26 +73,23 @@ import Mock from "better-mock";
 import point2 from "./chartComponents/point2.vue";
 import pie1 from "./chartComponents/pie1.vue";
 import gauge1 from "./chartComponents/gauge1.vue";
-let data = [];
-const createData = Mock.mock({
+let data = Mock.mock({
   "a|9": [
     {
       "key|+1": 1,
       "serial|+1": 10000,
       name() {
-        return "设备SCSB0" + this.key;
+        return "风险FX0" + this.key;
       },
-      specs() {
-        return "模型JQMX0" + this.key;
-      },
-      "grade|1": ["是", "否"],
-      "amount|1": ["正常", "异常"],
+      "specs|+1": ["节日人流拥挤", "大风大雨天气", "地区火警"],
+      "grade|1": ["警告", "危险"],
+      "amount|1": "@CNAME",
       "worker|1": "@CNAME",
       time: new Date().toLocaleDateString(),
+      // ["正常", "异常"]
     },
   ],
-});
-data = createData.a;
+}).a;
 
 export default {
   components: {
@@ -95,19 +108,24 @@ export default {
         key: "serial",
       },
       {
-        title: "设备名称", //列头显示文字
+        title: "风险编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "机器学习模型",
+        title: "事件类型",
         dataIndex: "specs",
         key: "specs",
       },
-      { title: "是否将出现问题", dataIndex: "grade", key: "grade" },
-      { title: "当前状态", dataIndex: "amount", key: "amount" },
-      { title: "负责人", dataIndex: "worker", key: "worker" },
+      {
+        title: "风险等级",
+        dataIndex: "grade",
+        key: "grade",
+        slots: { customRender: "grade" },
+      },
+      // { title: "安保人员", dataIndex: "amount", key: "amount" },
+      // { title: "负责人", dataIndex: "worker", key: "worker" },
       // { title: "时间", dataIndex: "time", key: "time" },
     ];
 
@@ -159,34 +177,11 @@ export default {
     /// 行操作
     const operate = [
       {
-        label: "推送",
+        label: "发布预警",
         event: function (record) {
-          alert(":" + JSON.stringify(record));
+          alert("查看详情:" + JSON.stringify(record));
         },
       },
-      //   label: "清洗",
-      //   event: function (record) {
-      //     alert(":" + JSON.stringify(record));
-      //   },
-      // },
-      // {
-      //   label: "归一化",
-      //   event: function (record) {
-      //     alert(":" + JSON.stringify(record));
-      //   },
-      // },
-      // {
-      //   label: "自动",
-      //   event: function (record) {
-      //     alert(":" + JSON.stringify(record));
-      //   },
-      // },
-      // {
-      //   label: "查看",
-      //   event: function (record) {
-      //     alert("查看详情:" + JSON.stringify(record));
-      //   },
-      // },
       // {
       //   label: "修改",
       //   event: function (record) {

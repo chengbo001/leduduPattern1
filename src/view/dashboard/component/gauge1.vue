@@ -17,7 +17,6 @@ export default {
         container: chartContainer,
         autoFit: true,
       });
-      chart.title({ title: "满意度" });
       chart
         .gauge()
         .data({

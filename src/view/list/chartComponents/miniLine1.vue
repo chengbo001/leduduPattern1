@@ -22,9 +22,6 @@ export default {
         container: chartContainer,
         autoFit: true,
       });
-      chart.title({
-        title: "设备量",
-      });
       chart.data(data);
 
       chart

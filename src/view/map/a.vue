@@ -2,11 +2,17 @@
   <!-- 密度热力图 -->
   <div>
     <page-layout>
+      <page-header
+        :title="title"
+        describe="直观地展示盐碱地的空间分布和变化情况。"
+      ></page-header>
+    </page-layout>
+    <page-layout>
       <a-card>
-        <div :id="chartContainer" style="height: 450px"></div>
+        <div :id="chartContainer" style="height: 600px"></div>
       </a-card>
       <div style="height: 10px"></div>
-      <a-card>
+      <!-- <a-card>
         <a-form>
           <a-form-item label="输入地址">
             <a-input placeholder="对拟建风电场的风资源进行评估"></a-input>
@@ -19,6 +25,9 @@
             </a-space>
           </a-form-item>
         </a-form>
+      </a-card> -->
+      <a-card>
+        <span>注释：绿色到红色，盐碱程度逐渐加重。</span>
       </a-card>
     </page-layout>
   </div>

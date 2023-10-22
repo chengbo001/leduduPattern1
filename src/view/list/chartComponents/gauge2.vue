@@ -17,8 +17,6 @@ export default {
         container: chartContainer,
         autoFit: true,
       });
-      chart.title({ title: "成本与效果监测" });
-
       chart
         .gauge()
         .data({

@@ -4,7 +4,7 @@
     <page-layout>
       <page-header
         :title="title"
-        describe="通过物联网设备、传感器和摄像头实时监测生产过程、设备状态和环境参数，以便及时发现问题并采取行动。"
+        describe="对盐碱地恶化情况进行预警的功能，如土壤盐分超标、干旱等情况。"
       ></page-header>
     </page-layout>
     <page-layout>
@@ -12,7 +12,7 @@
         <a-row>
           <a-col :span="8">
             <a-statistic
-              title="异常"
+              title="预警"
               :value="Math.floor(Math.random() * 10) + 20"
               style="margin-right: 50px"
             >
@@ -55,6 +55,7 @@
                 <a-button type="primary">检索</a-button>
               </a-form-item>
             </a-form>
+            <div style="height: 10px"></div>
             <p-table
               :fetch="fetch"
               :columns="columns"
@@ -90,18 +91,15 @@ const createData = Mock.mock({
       "key|+1": 1,
       "serial|+1": 10000,
       name() {
-        return "生产过程SCGC0" + this.key;
+        return "土地TD690" + this.key;
       },
-      specs() {
-        return "传感器CGQ0" + this.key;
-      },
-      grade() {
-        return "摄像头SXT0" + this.key;
-      },
-      "amount|1": ["正常", "异常"],
-      "worker|1": ["正常", "异常"],
+      "specs|1": ["超标", "正常"],
+      "grade|1": ["正常", "干旱", "水充足"],
+      "amount|1": ["045区域", "047区域"],
+      "worker|1": "@CNAME",
       time: new Date().toLocaleDateString(),
     },
+    // ["正常", "异常"]
   ],
 });
 data = createData.a;
@@ -122,19 +120,19 @@ export default {
         key: "serial",
       },
       {
-        title: "生产过程名称", //列头显示文字
+        title: "土地编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "传感器编号",
+        title: "土壤盐分",
         dataIndex: "specs",
         key: "specs",
       },
-      { title: "摄像头编号", dataIndex: "grade", key: "grade" },
-      { title: "设备状态", dataIndex: "amount", key: "amount" },
-      { title: "环境参数", dataIndex: "worker", key: "worker" },
+      { title: "干旱情况", dataIndex: "grade", key: "grade" },
+      { title: "位置", dataIndex: "amount", key: "amount" },
+      { title: "负责人", dataIndex: "worker", key: "worker" },
       // { title: "时间", dataIndex: "time", key: "time" },
     ];
 
@@ -187,6 +185,12 @@ export default {
     const operate = [
       {
         label: "推送",
+        event: function (record) {
+          alert(":" + JSON.stringify(record));
+        },
+      },
+      {
+        label: "取消",
         event: function (record) {
           alert(":" + JSON.stringify(record));
         },

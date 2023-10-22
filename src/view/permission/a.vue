@@ -3,7 +3,7 @@
     <page-layout>
       <page-header
         :title="title"
-        describe="实施严格的访问控制策略，确保相应功能只有被授予相应角色的人才能访问，保障系统和数据的安全。"
+        describe="系统可以根据不同用户的权限，设置不同的开门权限，确保出入口的安全。"
       ></page-header>
     </page-layout>
     <page-layout>
@@ -65,10 +65,10 @@ export default defineComponent({
           //   return "生产设备SCSB020" + this.key;
           // },
           name: "@CNAME",
-          field1: "管理员",
-          field2: "运营人员",
-          field3: "客服",
-          field4: "发货人员",
+          field1: "各区域",
+          field2: "区域QY021",
+          field3: "区域QY082",
+          field4: "建筑JZ031",
         },
       ],
     }).data;

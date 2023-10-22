@@ -89,46 +89,6 @@
             </div>
           </a-card>
         </a-col>
-        <!-- <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick color="rgb(105, 192, 255)" icon="BuildFilled" title="用户">
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick color="rgb(149, 222, 100)" icon="CloudFilled" title="首页">
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick
-            color="rgb(255, 156, 110)"
-            icon="CustomerServiceFilled"
-            title="访问"
-          >
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick color="rgb(179, 127, 235)" icon="MailFilled" title="邮件">
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick
-            color="rgb(255, 214, 102)"
-            icon="NotificationFilled"
-            title="消息"
-          >
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick color="rgb(92, 219, 211)" icon="SignalFilled" title="统计">
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick color="rgb(255, 133, 192)" icon="TrophyFilled" title="排名">
-          </quick>
-        </a-col>
-        <a-col :xs="12" :sm="6" :md="6" :lg="3" :xl="3">
-          <quick color="rgb(255, 192, 105)" icon="BellFilled" title="通知">
-          </quick>
-        </a-col> -->
         <!-- 图表区域开始 -->
         <a-col :span="24">
           <a-card>
@@ -153,9 +113,9 @@
                       v-for="item of rankData"
                       :key="item.key"
                     >
-                      <a-col span="2"
-                        ><div>{{ item.key }}</div></a-col
-                      >
+                      <a-col span="2">
+                        <div>{{ item.key }}</div>
+                      </a-col>
                       <a-col span="18">{{ item.name }}</a-col>
                       <a-col span="4">{{ item.amount }}</a-col>
                     </a-row>
@@ -166,97 +126,6 @@
             </a-tabs>
           </a-card>
         </a-col>
-        <!-- 两个排行开始 -->
-        <!-- <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card title="热门类">
-            <a-row :gutter="10">
-              <a-col :span="12">
-                <a-card>
-                  <a-statistic
-                    title="种类"
-                    :value="Math.floor(Math.random() * 10) + 10"
-                    :precision="2"
-                    suffix="%"
-                    :value-style="{ color: '#3f8600' }"
-                    style="margin-right: 50px"
-                  >
-                    <template v-slot:prefix>
-                      <arrow-up-outlined />
-                    </template>
-                  </a-statistic>
-                </a-card>
-              </a-col>
-              <a-col :span="12">
-                <a-card>
-                  <a-statistic
-                    title="不良率"
-                    :value="Math.floor(Math.random() * 10) + 10"
-                    :precision="2"
-                    suffix="%"
-                    class="demo-class"
-                    :value-style="{ color: '#cf1322' }"
-                  >
-                    <template v-slot:prefix>
-                      <arrow-down-outlined />
-                    </template>
-                  </a-statistic>
-                </a-card>
-              </a-col>
-              <a-col span="24">
-                <a-table
-                  :columns="columns1"
-                  :data-source="datas1"
-                  style="margin-top: 10px"
-                />
-              </a-col>
-            </a-row>
-          </a-card>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card title="各类占比">
-            <a-row :gutter="10">
-              <a-col :span="12">
-                <a-card>
-                  <a-statistic
-                    title="优化"
-                    :value="Math.floor(Math.random() * 10) + 10"
-                    :precision="2"
-                    suffix="%"
-                    :value-style="{ color: '#3f8600' }"
-                    style="margin-right: 50px"
-                  >
-                    <template v-slot:prefix>
-                      <arrow-up-outlined />
-                    </template>
-                  </a-statistic>
-                </a-card>
-              </a-col>
-              <a-col :span="12">
-                <a-card>
-                  <a-statistic
-                    title="问题"
-                    :value="Math.floor(Math.random() * 10) + 10"
-                    :precision="2"
-                    suffix="%"
-                    class="demo-class"
-                    :value-style="{ color: '#cf1322' }"
-                  >
-                    <template v-slot:prefix>
-                      <arrow-down-outlined />
-                    </template>
-                  </a-statistic>
-                </a-card>
-              </a-col>
-              <a-col span="24">
-                <a-table
-                  :columns="columns2"
-                  :data-source="datas2"
-                  style="margin-top: 10px"
-                />
-              </a-col>
-            </a-row>
-          </a-card>
-        </a-col> -->
         <!-- <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
           <a-card>
             <line-and-interval></line-and-interval>
@@ -307,7 +176,7 @@ export default {
     const chartRef = ref(null);
 
     onMounted(() => {
-      const a = Mock.mock({
+      const datass = Mock.mock({
         "b|9": [
           {
             "num|+1": 1,
@@ -317,8 +186,7 @@ export default {
             "sales|40-140": 0,
           },
         ],
-      });
-      const datass = a.b;
+      }).b;
 
       const chart = new Chart({
         container: chartContainer,
@@ -340,7 +208,7 @@ export default {
       chartRef.value && chartRef.value.destroy();
     });
 
-    const createData = Mock.mock({
+    const rankData = Mock.mock({
       "a|7": [
         {
           "key|+1": 1,
@@ -350,44 +218,12 @@ export default {
           "amount|1000-20000": 0,
         },
       ],
-    });
-
-    const columns1 = [
-      { title: "编号", dataIndex: "key", key: "key" },
-      { title: "名称", dataIndex: "name", key: "name" },
-      { title: "数量", dataIndex: "amount", key: "amount" },
-      { title: "备注", dataIndex: "notes", key: "notes" },
-    ];
-
-    const datas = Mock.mock({
-      "a|4": [
-        {
-          "key|+1": 1,
-          name: function () {
-            return "文档类别" + this.key;
-          },
-          "amount|10000-20000": 0,
-          "ratio|1-30": 0,
-          notes: "",
-        },
-      ],
-    });
-
-    const columns2 = [
-      { title: "编号", dataIndex: "key", key: "key" },
-      { title: "名称", dataIndex: "name", key: "name" },
-      { title: "比例", dataIndex: "ratio", key: "ratio" },
-      { title: "备注", dataIndex: "notes", key: "notes" },
-    ];
+    }).a;
 
     return {
       title: document.title,
       chartContainer,
-      columns1,
-      datas1: datas.a,
-      columns2,
-      datas2: datas.a,
-      rankData: createData.a,
+      rankData,
     };
   },
 };

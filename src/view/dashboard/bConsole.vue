@@ -1,26 +1,27 @@
 <template>
   <div id="home">
-    <page-header :title="title" describe="展示各方面统计结果"></page-header>
     <page-layout>
+      <page-header :title="title" describe="展示各方面统计结果"></page-header>
+      <div style="height: 10px"></div>
       <a-row :gutter="[10, 10]">
         <!-- 自定义图表 -->
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="观众数据">
             <radial></radial>
           </a-card>
         </a-col>
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="互动数据">
             <pie></pie>
           </a-card>
         </a-col>
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="销售数据">
             <line-group></line-group>
           </a-card>
         </a-col>
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="用户行为数据">
             <line-and-interval></line-and-interval>
           </a-card>
         </a-col>

@@ -2,18 +2,18 @@
   <div id="table-dome">
     <page-header
       :title="title"
-      describe="对个体遵循运动处方进行训练的效果进行评估，以便调整运动处方，确保其始终符合个体的需求和身体状况。"
+      describe="上传项目进度和实际情况，以便系统对预算进行动态调整。"
     ></page-header>
     <page-layout>
       <a-row :gutter="10">
-        <a-col :span="6">
+        <!-- <a-col :span="6">
           <a-directory-tree
             multiple
             :tree-data="treeData"
             :expandedKeys="[1]"
             :selectedKeys="[11]"
           ></a-directory-tree>
-        </a-col>
+        </a-col> -->
         <a-col :span="18">
           <a-card>
             <a-form layout="inline">
@@ -28,6 +28,7 @@
                 <a-button type="primary">检索</a-button>
               </a-form-item>
             </a-form>
+            <div style="height: 10px"></div>
             <p-table
               :fetch="fetch"
               :value="obj"
@@ -40,7 +41,7 @@
               <template #name="{ record }">
                 {{ record.name }}
               </template>
-              <template #specs="{}">
+              <!-- <template #specs="{}">
                 <a-select style="width: 100%" placeholder="可选择">
                   <a-select-option value="jack">效果较好</a-select-option>
                   <a-select-option value="lucy">效果一般</a-select-option>
@@ -50,27 +51,28 @@
               </template>
               <template #grade="{}">
                 <a-input></a-input>
-              </template>
+              </template> -->
             </p-table>
           </a-card>
         </a-col>
-        <!-- <a-col :span="6">
+        <a-col :span="6">
           <a-card>
             <a-form>
-              <a-form-item label="商品名称：">
+              <a-form-item
+                v-for="item of columns
+                  .filter((item) => item.id != 1)
+                  .map((item) => item.title)"
+                :key="item"
+                :label="item"
+              >
                 <a-input />
-              </a-form-item>
-              <a-form-item label="工具：">
-                <a-checkbox-group
-                  :options="['优惠券', '秒杀', '限时折扣']"
-                ></a-checkbox-group>
               </a-form-item>
               <a-button type="primary" style="display: block; margin: 0 auto">
                 确定
               </a-button>
             </a-form>
           </a-card>
-        </a-col> -->
+        </a-col>
       </a-row>
     </page-layout>
     <page-footer></page-footer>
@@ -84,11 +86,18 @@ const createData = Mock.mock({
     {
       "key|+1": 1,
       "serial|+1": 10000,
-      name() {
-        return "ZBSP050" + this.key + "商品";
-      },
-      "specs|1": "",
-      "grade|1": "",
+      // name() {
+      //   return "ZBSP050" + this.key + "商品";
+      // },
+      "name|+1": [
+        "桥梁项目",
+        "办公楼项目",
+        "住宅楼项目",
+        "仓库项目",
+        "公路项目",
+      ],
+      specs: "+10%",
+      "grade|1": "正常生产",
       "amount|1": ["是", "否"],
       worker: function () {
         return "套题" + this.key;
@@ -110,7 +119,7 @@ const treeData = Mock.mock({
   "data|6": [
     {
       "index|+1": 1,
-      title() {
+      "title|+1": function () {
         return "监测小组" + this.key;
       },
       "key|+1": 1,
@@ -135,31 +144,32 @@ export default {
     /// 字段
     const columns = [
       {
+        id: 1,
         title: "编号",
         dataIndex: "serial",
         key: "serial",
       },
       {
-        title: "运动处方编号", //列头显示文字
+        title: "项目名称", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "效果",
+        title: "进度",
         dataIndex: "specs",
         key: "specs",
-        slots: { customRender: "specs" },
+        // slots: { customRender: "specs" },
       },
       {
-        title: "描述",
+        title: "备注",
         dataIndex: "grade",
         key: "grade",
-        slots: { customRender: "grade" },
+        // slots: { customRender: "grade" },
       },
       // { title: "限时折扣", dataIndex: "amount", key: "amount" },
       // { title: "题目", dataIndex: "worker", key: "worker" },
-      // { title: "操作时间", dataIndex: "time", key: "time" },
+      { title: "时间", dataIndex: "time", key: "time" },
     ];
 
     /// 数据来源 [模拟]
@@ -210,7 +220,7 @@ export default {
     /// 行操作
     const operate = [
       {
-        label: "提交",
+        label: "删除",
         event: function (record) {
           alert("查看详情:" + JSON.stringify(record));
         },

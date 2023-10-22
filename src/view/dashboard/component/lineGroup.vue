@@ -13,16 +13,6 @@ export default {
 
     const chartRef = ref(null);
     onMounted(() => {
-      const createData = Mock.mock({
-        "value|5": [
-          {
-            "key|+1": 1,
-            "symbol|1": ["种类1", "种类2", "种类3", "种类4", "种类5"],
-            date: "@DATE",
-            "price|50-300": 0,
-          },
-        ],
-      });
       /**
        * A recreation of this demo: https://vega.github.io/vega-lite/examples/line_overlay.html
        */
@@ -30,9 +20,6 @@ export default {
       const chart = new Chart({
         container: chartContainer,
         autoFit: true,
-      });
-      chart.title({
-        title: "聚合折线统计",
       });
       chart
         .line()
@@ -45,11 +32,11 @@ export default {
         .encode("x", (d) => new Date(d.date).getFullYear() + 13)
         .encode("y", (d) => d.price)
         .encode("color", "symbol")
-        .label({
-          text: "price",
-          transform: [{ type: "overlapDodgeY" }],
-          fontSize: 10,
-        })
+        // .label({
+        //   text: "price",
+        //   transform: [{ type: "overlapDodgeY" }],
+        //   fontSize: 10,
+        // })
         .tooltip({ channel: "y", valueFormatter: ".1f" });
 
       chart.render();

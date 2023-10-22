@@ -1,13 +1,10 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="可以选择将转换后的3D文件保存为不同格式，如STL、OBJ、3MF等，并设置文件的保存路径和名称。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
-      <a-card class="card" title="设置" :bordered="false">
+      <a-card class="card" title="新增" :bordered="false">
         <a-form class="form" :scrollToFirstError="true">
           <a-row :gutter="16">
             <a-col
@@ -24,27 +21,36 @@
           </a-row>
           <a-form-item>
             <div style="text-align: center">
-              <a-button htmlType="submit" type="primary">提交</a-button>
+              <a-button
+                htmlType="submit"
+                type="primary"
+                @click="$alert('成功发布')"
+                >发布</a-button
+              >
             </div>
           </a-form-item>
         </a-form>
       </a-card>
 
       <!-- table -->
-      <a-card title="历史记录">
+      <a-card title="展示">
         <a-table
           :columns="columns"
           :dataSource="data"
           :pagination="false"
           :loading="memberLoading"
+          :rowSelection="{}"
         >
           <template #operation="{}">
             <span>
-              <a>应用</a>
+              <a @click="$alert('发送成功')">发送</a>
               <a-divider type="vertical" />
-              <a>编辑</a>
+              <a @click="$alert('已编辑成功，正在保存')">编辑</a>
               <a-divider type="vertical" />
-              <a-popconfirm title="是否要删除此行？">
+              <a-popconfirm
+                title="是否要删除此行？"
+                @confirm="$alert('已删除')"
+              >
                 <a>删除</a>
               </a-popconfirm>
             </span>
@@ -78,45 +84,40 @@ export default defineComponent({
     PlusOutlined,
   },
   setup() {
-    const labelData = ["设置名称", "格式", "保存路径", "文件名称"];
+    const labelData = ["名称", "内容", "地点", "时间"];
     const state = reactive({
       loading: false,
       memberLoading: false,
       // table
       columns: [
         {
-          title: "设置名称",
+          title: "名称",
           dataIndex: "name",
           key: "name",
-          width: "20%",
           slots: { customRender: "name" },
         },
         {
-          title: "格式",
+          title: "内容",
           dataIndex: "field1",
           key: "field1",
-          width: "20%",
           slots: { customRender: "field1" },
         },
         {
-          title: "保存路径",
+          title: "地点",
           dataIndex: "field2",
           key: "field2",
-          width: "20%",
           slots: { customRender: "field2" },
         },
         {
-          title: "文件名称",
+          title: "时间",
           dataIndex: "field3",
           key: "field3",
-          width: "15%",
           slots: { customRender: "field3" },
         },
         // {
         //   title: "培训进度",
         //   dataIndex: "field4",
         //   key: "field4",
-        //   width: "15%",
         //   slots: { customRender: "field4" },
         // },
         {
@@ -129,12 +130,13 @@ export default defineComponent({
         "data|6": [
           {
             "key|+1": 1,
-            name() {
-              return "设置SZ075" + this.key;
-            },
-            "field1|+1": ["STL", "OBJ", "3MF"],
-            "field2|+1": ["/c/user/a", "/c/user/b", "/c/user/c"],
-            "field3|1": ["登陆月球", "名画", "玛丽莲梦露"],
+            // name() {
+            //   return "设置SZ075" + this.key;
+            // },
+            "name|+1": ["节能宣传", "推广节能技术"],
+            "field1|+1": ["讲师讲授相关内容", "讲师讲授相关内容"],
+            "field2|+1": ["405教室", "406教室"],
+            "field3|1": ["10/20", "10/20"],
             "field4|20-90": 1,
           },
         ],

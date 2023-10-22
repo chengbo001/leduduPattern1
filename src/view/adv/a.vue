@@ -3,10 +3,12 @@
     <page-layout>
       <page-header
         :title="title"
-        describe="定期生成学习报告，展示学习进度、成就和需要改进的地方，帮助明确学习目标。"
+        describe="提供最新的科技政策、项目申报等信息，帮助用户及时了解行业动态。"
       ></page-header>
     </page-layout>
     <page-layout>
+      <a-input-search placeholder="请输入" style="width: 400px" />
+      <div style="height: 10px"></div>
       <a-card class="card" titleN="帮助文档" :bordered="false">
         <!-- <a-input-search placeholder="请输入您的问题" style="width: 400px" /> -->
         <!-- <div style="height: 10px"></div> -->
@@ -36,7 +38,7 @@
               <a-skeleton avatar :title="false" :loading="false" active>
                 <a-list-item-meta :description="item.desc">
                   <template #title>
-                    <a href="https://www.antdv.com/">
+                    <a href="javascript:;">
                       {{ item.title }}
                     </a>
                   </template>
@@ -127,11 +129,15 @@ export default defineComponent({
             "key|+1": 1,
             avatar:
               "https://img0.baidu.com/it/u=1821253856,3774998416&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            // "title|1": ["使用方法"],
-            title() {
-              return 12 - this.key + "月学习报告";
-            },
-            "desc|1": ["学习进度正常、小有成就和仍需要努力，争取超过60%的用户"],
+            "title|+1": ["科技政策", "项目申报", "行业动态"],
+            // title() {
+            //   return "消息通知";
+            // },
+            "desc|+1": [
+              "引入创新科技的公司进行税收优惠",
+              "项目申报流程简化，详情请咨询客服",
+              "xxx公司使用xxx科技产量提升10%",
+            ],
           },
         ],
       }).data;

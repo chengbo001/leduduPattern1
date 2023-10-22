@@ -12,6 +12,7 @@
     "@ant-design-vue/use": "^0.0.1-alpha.10",
     "@ant-design/icons-vue": "^6.0.1",
     "@antv/g2": "^5.1.5",
+    "@antv/g2plot": "^2.4.31",
     "@vitejs/plugin-vue": "^1.10.1",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",

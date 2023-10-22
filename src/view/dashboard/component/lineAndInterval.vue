@@ -43,9 +43,6 @@ export default {
       });
 
       chart.data(data);
-      chart.title({
-        title: "多维多轴混合统计",
-      });
 
       chart
         .line()

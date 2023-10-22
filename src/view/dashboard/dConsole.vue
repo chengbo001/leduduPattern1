@@ -1,7 +1,11 @@
 <template>
   <div id="home">
-    <page-header :title="title" describe="根据统计结果进行分析"></page-header>
     <page-layout>
+      <page-header
+        :title="title"
+        describe="对直播间的运营数据进行多维度分析"
+      ></page-header>
+      <div style="height: 10px"></div>
       <a-row :gutter="[10, 10]">
         <!-- 自定义图表 -->
         <!-- <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
@@ -25,22 +29,22 @@
           </a-card>
         </a-col> -->
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="观众行为">
             <point></point>
           </a-card>
         </a-col>
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="不同时间段数据变化">
             <box></box>
           </a-card>
         </a-col>
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="成本与效果">
             <gauge-2></gauge-2>
           </a-card>
         </a-col>
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-          <a-card>
+          <a-card title="满意度">
             <gauge-1></gauge-1>
           </a-card>
         </a-col>

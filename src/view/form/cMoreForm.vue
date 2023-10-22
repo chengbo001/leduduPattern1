@@ -1,10 +1,7 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="对转换结果进行手动调整，如调整模型的位置、大小、方向等，以便获得更满意的效果。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-card class="card" title="设置" :bordered="false">
@@ -40,7 +37,7 @@
         >
           <template #operation="{}">
             <span>
-              <a>应用</a>
+              <a>联动通讯</a>
               <a-divider type="vertical" />
               <a>编辑</a>
               <a-divider type="vertical" />
@@ -78,35 +75,35 @@ export default defineComponent({
     PlusOutlined,
   },
   setup() {
-    const labelData = ["设置名称", "模型位置", "模型大小", "模型方向"];
+    const labelData = ["单位", "负责人", "接口", "电话"];
     const state = reactive({
       loading: false,
       memberLoading: false,
       // table
       columns: [
         {
-          title: "设置名称",
+          title: "单位",
           dataIndex: "name",
           key: "name",
           width: "20%",
           slots: { customRender: "name" },
         },
         {
-          title: "模型位置",
+          title: "负责人",
           dataIndex: "field1",
           key: "field1",
           width: "20%",
           slots: { customRender: "field1" },
         },
         {
-          title: "模型大小",
+          title: "接口",
           dataIndex: "field2",
           key: "field2",
           width: "20%",
           slots: { customRender: "field2" },
         },
         {
-          title: "模型方向",
+          title: "电话",
           dataIndex: "field3",
           key: "field3",
           width: "15%",
@@ -130,13 +127,14 @@ export default defineComponent({
           {
             "key|+1": 1,
             name() {
-              return "设置SZ068" + this.key;
+              return "单位DW068" + this.key;
             },
-            "field1|+1": ["展示按钮", "关闭按钮"],
-            "field2|+1": ["展示按钮", "关闭按钮"],
-            "field3|1": ["展示按钮", "关闭按钮"],
+            "field1|+1": "@CNAME",
+            "field2|+1": ["cbns.com/api/", "sejl.com/api/"],
+            "field3|1": "@PHONE",
             "field4|20-90": 1,
           },
+          // ["展示按钮", "关闭按钮"]
         ],
       }).data,
       //["职员", "主管", "经理", "总监"]["销售部", "设计部", "财务部", "人力部", "产品部"]

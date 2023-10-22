@@ -3,11 +3,11 @@
     <page-layout>
       <page-header
         :title="title"
-        describe="识别图像中的前景和背景，自动调整图像的亮度和对比度等，以提高转换效果。"
+        describe="系统中注册的设备列表，包括设备名称、类型、状态等信息。管理物联网设备，设备监控、设备控制。"
       ></page-header>
     </page-layout>
     <page-layout>
-      <a-card class="card" title="设置" :bordered="false">
+      <a-card class="card" title="注册" :bordered="false">
         <a-form class="form" :scrollToFirstError="true">
           <a-row :gutter="16">
             <a-col
@@ -18,7 +18,12 @@
               :sm="24"
             >
               <a-form-item :label="item">
-                <a-input placeholder="请输入" />
+                <a-space>
+                  <a-input placeholder="请输入" />
+                  <a-button size="small" v-if="item == '授权验证码'">
+                    发送
+                  </a-button>
+                </a-space>
               </a-form-item>
             </a-col>
           </a-row>
@@ -31,7 +36,7 @@
       </a-card>
 
       <!-- table -->
-      <a-card title="历史记录">
+      <a-card title="设备列表">
         <a-table
           :columns="columns"
           :dataSource="data"
@@ -40,9 +45,9 @@
         >
           <template #operation="{}">
             <span>
-              <a>应用</a>
+              <a>监控</a>
               <a-divider type="vertical" />
-              <a>编辑</a>
+              <a>控制</a>
               <a-divider type="vertical" />
               <a-popconfirm title="是否要删除此行？">
                 <a>删除</a>
@@ -78,53 +83,42 @@ export default defineComponent({
     PlusOutlined,
   },
   setup() {
-    const labelData = [
-      "设置名称",
-      "识别前景",
-      "识别背景",
-      "自动调整亮度",
-      "自动调整对比度",
-    ];
+    const labelData = ["设备名称", "类型", "状态"];
     const state = reactive({
       loading: false,
       memberLoading: false,
       // table
       columns: [
         {
-          title: "设置名称",
+          title: "设备名称",
           dataIndex: "name",
           key: "name",
-          width: "20%",
           slots: { customRender: "name" },
         },
         {
-          title: "识别前景",
+          title: "类型",
           dataIndex: "field1",
           key: "field1",
-          width: "20%",
           slots: { customRender: "field1" },
         },
         {
-          title: "识别背景",
+          title: "状态",
           dataIndex: "field2",
           key: "field2",
-          width: "20%",
           slots: { customRender: "field2" },
         },
-        {
-          title: "自动调整亮度",
-          dataIndex: "field3",
-          key: "field3",
-          width: "15%",
-          slots: { customRender: "field3" },
-        },
-        {
-          title: "自动调整对比度",
-          dataIndex: "field4",
-          key: "field4",
-          width: "15%",
-          slots: { customRender: "field4" },
-        },
+        // {
+        //   title: "自动调整亮度",
+        //   dataIndex: "field3",
+        //   key: "field3",
+        //   slots: { customRender: "field3" },
+        // },
+        // {
+        //   title: "自动调整对比度",
+        //   dataIndex: "field4",
+        //   key: "field4",
+        //   slots: { customRender: "field4" },
+        // },
         {
           title: "操作",
           key: "action",
@@ -136,10 +130,10 @@ export default defineComponent({
           {
             "key|+1": 1,
             name() {
-              return "设置SZ056" + this.key;
+              return "设备SB056" + this.key;
             },
-            "field1|+1": ["开启自动", "关闭自动"],
-            "field2|+1": ["开启自动", "关闭自动"],
+            "field1|+1": ["家电", "工具", "家居"],
+            "field2|+1": ["正常运行"],
             "field3|1": ["开启自动", "关闭自动"],
             "field4|1": ["开启自动", "关闭自动"],
           },

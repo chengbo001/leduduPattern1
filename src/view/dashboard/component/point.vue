@@ -17,9 +17,6 @@ export default {
         container: chartContainer,
         autoFit: true,
       });
-      chart.title({
-        title: "散点分析",
-      });
       chart
         .point()
         .data({

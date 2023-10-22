@@ -1,5 +1,5 @@
 <template>
-  <!-- 增加减少总数 -->
+  <!-- 增加 减少 总数 柱状图 -->
   <div :id="chartContainer" style="width: 100%; height: 520px"></div>
 </template>
 

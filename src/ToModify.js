@@ -8,16 +8,28 @@
 // 学习网可截图 https://gitee.com/macplus/WTS?_from=gitee_search#https://gitee.com/link?target=http%3A%2F%2Fwts.wcpknow.com
 
 // createFile 生成3D图片。页面内容：文件拖拽上传框 结果展示区。
-// cardList 主体方块布局 有图标按钮
-// boxList 主体方块布局。视频课程 学习报告 算法管理
-// stateList 主体表格 带状态big icon。适合预警Menu
+// cardList 主体方块布局 有图标按钮。
+//  a 适合文档管理、信号灯 设备管理
+// boxList 主体方块布局。视频课程 学习报告 算法管理 文字按钮
+//  a 课程方块
+//  b 算法方块
+//  c 三段文字描述 方向：设备管理
+// stateList 主体表格 带状态。适合预警Menu
+//  a 三栏文字
+//  b big icon
 // tableList 主力page 带树结构 小图表 小表单
-//  a 方块内有图片 标题 描述
+//  a 方块内有图片 标题 描述。偏向数据采集
 //  b 方块内标题 说明 评分 按钮
-// base-form 主体为上表单 下list
+// base-form 主体为上表单 下2列list
 // more-form 主体两个card上下布局。上card为表单，下card为表格
+//  a 用于系统扩展对接
+//  b 用于设备对接
+//  c 部门协同
+//  d 发布活动信息
 // step-form 主体为 3个步骤表单
 // adv 主体为一条条的，每条包含头像 title desc 按钮。适合广告推送 帮助文档 系统升级等Menu。
+//  b 使用指南 问题解答
+//  c 适合系统升级
 // history 主体为搜索 表格 按钮。适合历史记录。
 // createReport 主体为表单 4列List
 // dashboard 主体为4个图表
@@ -30,4 +42,22 @@
 // permission 适合权限管理Menu
 // picWrap 适合装载截图的Menu
 // function 功能page 语音识别口语等
+// workerHistory 定制页面
 // customerService 客服
+// collapse 手风琴布局.
+//  a 预案 方案 的展示与增删改发送
+//  b 规则 的展示
+//  c 适合展示几个按钮的开关
+// description 描述列表。一个title 各个详细信息在下方展示
+//  a多个。有前后数据对比。
+//  b单个
+//  c多个 底部有按钮
+//  d item有两个按钮
+//  a-base 操作日志
+// itemShow 展示一条一条的数据。
+//  补充数据条目的展现形式
+// home 首页。实时数据 设备状态等信息
+// xiezuo 主体穿梭框。适合跨部门协作发通知
+
+// 用时间轴搞个东西
+// 各个页面的按钮加弹窗。数据收集的新增按钮改为自动收集，提示为开始自动收集。

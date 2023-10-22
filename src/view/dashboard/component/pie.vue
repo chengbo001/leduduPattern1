@@ -17,7 +17,7 @@ export default {
         "value|5": [
           {
             "key|+1": 1,
-            id: "@CNAME",
+            "id|+1": ["A", "B", "C", "D", "E"],
             "value|50-600": 0,
           },
         ],
@@ -30,7 +30,6 @@ export default {
         container: chartContainer,
         autoFit: true,
       });
-      chart.title({ title: "饼状统计" });
       chart.coordinate({ type: "theta", innerRadius: 0.25, outerRadius: 0.8 });
 
       chart

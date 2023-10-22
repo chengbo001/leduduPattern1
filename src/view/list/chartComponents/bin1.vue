@@ -1,4 +1,5 @@
 <template>
+  <!-- 两个柱子重叠 -->
   <div :id="chartContainer" style="width: 100%; height: 520px"></div>
 </template>
 

@@ -1,4 +1,5 @@
 <template>
+  <!-- 申请信息显示 -->
   <div>
     <page-layout>
       <a-card>

@@ -2,23 +2,62 @@
   <div id="table-dome">
     <page-header
       :title="title"
-      describe="表格展示系统内所有人员的详细信息"
+      describe="管理系统用户和权限，如添加用户、分配角色等。为不同角色的人员分配不同的权限，确保数据安全和操作合规。"
     ></page-header>
+    <!-- 管理系统用户和权限，如添加用户、分配角色等。为不同角色的人员分配不同的权限，确保数据安全和操作合规。 -->
     <page-layout>
-      <a-card>
-        <p-table
-          :fetch="fetch"
-          :columns="columns"
-          :toolbar="toolbar"
-          :operate="operate"
-          :pagination="pagination"
-        >
-          <!-- 继承至 a-table 的默认插槽 -->
-          <template #name="{ record }">
-            {{ record.name }}
-          </template>
-        </p-table>
-      </a-card>
+      <a-row :gutter="[10, 10]">
+        <a-col :span="18">
+          <a-card>
+            <a-form layout="inline">
+              <a-form-item
+                v-for="item of 3"
+                :key="item"
+                :label="columns[item].title"
+              >
+                <a-input></a-input>
+              </a-form-item>
+              <a-form-item>
+                <a-button type="primary">检索</a-button>
+              </a-form-item>
+            </a-form>
+            <div style="height: 12px"></div>
+            <p-table
+              :fetch="fetch"
+              :columns="columns"
+              :toolbar="toolbar"
+              :operate="operate"
+              :pagination="pagination"
+            >
+              <!-- 继承至 a-table 的默认插槽 -->
+              <template #name="{ record }">
+                {{ record.name }}
+              </template>
+              <template #worker="{ record }">
+                <a-tag color="green">{{ record.worker }}</a-tag>
+              </template>
+            </p-table>
+          </a-card>
+        </a-col>
+        <a-col :span="6">
+          <a-card>
+            <a-form>
+              <a-form-item
+                v-for="item of columns
+                  .filter((item) => item.id != 1)
+                  .map((item) => item.title)"
+                :key="item"
+                :label="item"
+              >
+                <a-input />
+              </a-form-item>
+              <a-button type="primary" style="display: block; margin: 0 auto">
+                提交
+              </a-button>
+            </a-form>
+          </a-card>
+        </a-col>
+      </a-row>
     </page-layout>
     <page-footer></page-footer>
   </div>
@@ -35,7 +74,7 @@ const createData = Mock.mock({
       "age|20-60": 0,
       phone: "@PHONE",
       "grade|1": ["高", "中", "低"],
-      worker: "@CNAME",
+      "worker|+1": ["管理者", "操作", "查看"],
       time: new Date().toLocaleDateString(),
     },
   ],
@@ -49,6 +88,7 @@ export default {
     /// 字段
     const columns = [
       {
+        id: 1,
         title: "编号",
         dataIndex: "serial",
         key: "serial",
@@ -66,10 +106,14 @@ export default {
       },
       { title: "电话", dataIndex: "phone", key: "phone" },
       { title: "等级", dataIndex: "grade", key: "grade" },
-      { title: "操作员", dataIndex: "worker", key: "worker" },
-      { title: "操作时间", dataIndex: "time", key: "time" },
+      {
+        title: "权限",
+        dataIndex: "worker",
+        key: "worker",
+        slots: { customRender: "worker" },
+      },
+      { title: "时间", dataIndex: "time", key: "time" },
     ];
-
     /// 数据来源 [模拟]
     const fetch = async (param) => {
       return new Promise((resolve) => {

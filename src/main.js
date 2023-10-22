@@ -24,6 +24,10 @@ app.config.globalProperties.$getImageUrl = function (imgSrc) {
   return new URL(imgSrc, import.meta.url).href;
 };
 
+app.config.globalProperties.$alert = function (info) {
+  alert(info);
+};
+
 Object.keys(directives).forEach((directive) => {
   app.directive(directive, directives[directive]);
 });
