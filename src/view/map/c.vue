@@ -7,13 +7,13 @@
     <page-layout>
       <a-card>
         <div>
-          <iframe
+          <!-- <iframe
             src="/html/carguiji.html"
             frameborder="0"
             name="iframes"
             id="iframes"
             style="width: 100%; height: 500px"
-          ></iframe>
+          ></iframe> -->
         </div>
         <span>注释：使用了百度地图开放平台技术，所以会出现百度地图标签</span>
       </a-card>

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-footer">
+  <div classN="page-footer">
     <!-- <div style="text-align: center">
       <span class="page-footer-title">
           <a href="http://www.pearadmin.com">官网</a>

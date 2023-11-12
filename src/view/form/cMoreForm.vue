@@ -21,7 +21,12 @@
           </a-row>
           <a-form-item>
             <div style="text-align: center">
-              <a-button htmlType="submit" type="primary">提交</a-button>
+              <a-button
+                htmlType="submit"
+                type="primary"
+                @click="$alert('保存成功')"
+                >提交</a-button
+              >
             </div>
           </a-form-item>
         </a-form>
@@ -37,11 +42,14 @@
         >
           <template #operation="{}">
             <span>
-              <a>联动通讯</a>
+              <!-- <a>联动通讯</a>
+              <a-divider type="vertical" /> -->
+              <a @click="$alert('编辑成功')">编辑</a>
               <a-divider type="vertical" />
-              <a>编辑</a>
-              <a-divider type="vertical" />
-              <a-popconfirm title="是否要删除此行？">
+              <a-popconfirm
+                title="是否要删除此行？"
+                @confirm="$alert('已删除')"
+              >
                 <a>删除</a>
               </a-popconfirm>
             </span>
@@ -75,45 +83,40 @@ export default defineComponent({
     PlusOutlined,
   },
   setup() {
-    const labelData = ["单位", "负责人", "接口", "电话"];
+    const labelData = ["序列", "名称", "内容", "打分标准"];
     const state = reactive({
       loading: false,
       memberLoading: false,
       // table
       columns: [
         {
-          title: "单位",
+          title: "序列",
           dataIndex: "name",
           key: "name",
-          width: "20%",
           slots: { customRender: "name" },
         },
         {
-          title: "负责人",
+          title: "名称",
           dataIndex: "field1",
           key: "field1",
-          width: "20%",
           slots: { customRender: "field1" },
         },
         {
-          title: "接口",
+          title: "内容",
           dataIndex: "field2",
           key: "field2",
-          width: "20%",
           slots: { customRender: "field2" },
         },
         {
-          title: "电话",
+          title: "打分标准",
           dataIndex: "field3",
           key: "field3",
-          width: "15%",
           slots: { customRender: "field3" },
         },
         // {
         //   title: "培训进度",
         //   dataIndex: "field4",
         //   key: "field4",
-        //   width: "15%",
         //   slots: { customRender: "field4" },
         // },
         {
@@ -127,11 +130,20 @@ export default defineComponent({
           {
             "key|+1": 1,
             name() {
-              return "单位DW068" + this.key;
+              // return "药物YW0" + this.key;
+              return this.key;
             },
-            "field1|+1": "@CNAME",
-            "field2|+1": ["cbns.com/api/", "sejl.com/api/"],
-            "field3|1": "@PHONE",
+            // "name|+1": ["8:00", "12:00"],
+            "field1|+1": ["整理", "整顿", "清扫", "清洁", "素养", "安全"],
+            "field2|+1": [
+              "检查实验室内的物品是否摆放整齐，有无乱堆乱放现象。",
+              "检查实验室内的设备和物品是否摆放在合适的位置，标识是否清晰，方便取用。",
+              "检查实验室内的环境卫生情况，包括地面、桌面、仪器设备表面等，确保干净整洁。",
+              "检查实验室内的安全设施和设备是否正常运行，是否符合安全标准。",
+              "检查实验室内的员工是否具有良好的安全习惯，是否遵守实验室安全规章制度。",
+              "检查实验室内的安全隐患，包括防火、防爆、防毒、防辐射等，确保实验室安全。",
+            ],
+            "field3|1": ["满分5，最低1", "满分5，最低1"],
             "field4|20-90": 1,
           },
           // ["展示按钮", "关闭按钮"]

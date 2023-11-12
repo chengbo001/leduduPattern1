@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="系统应能够从各种来源（如摄像头、无人机、卫星等）获取图像和视频。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <!-- <a-card>
@@ -68,7 +65,7 @@
         </a-col>
         <!-- <a-col :span="6">
           <a-card>
-            <a-form>
+            <a-form :label-col="{ span: 8 }">
               <a-form-item
                 v-for="item of columns
                   .filter((item) => item.id != 1)
@@ -78,11 +75,11 @@
               >
                 <a-input />
               </a-form-item>
-              <a-radio-group
-                option-type="button"
-                :options="['佩戴', '未佩戴']"
-              />
-              <a-button type="primary" style="display: block; margin: 0 auto">
+              <a-button
+                type="primary"
+                style="display: block; margin: 0 auto"
+                @click="$alert('提交成功')"
+              >
                 提交
               </a-button>
             </a-form>
@@ -90,11 +87,13 @@
         </a-col> -->
         <a-col :span="6">
           <!-- <a-card>
-            切换数据中心：
-            <a-select value="数据中心1" style="width: 200px">
-              <a-select-option value="1">数据中心1</a-select-option>
-              <a-select-option value="2">数据中心2</a-select-option>
-              <a-select-option value="3">数据中心3</a-select-option>
+            切换数据源：
+            <a-select value="文件" style="width: 200px">
+              <a-select-option value="1">数据库</a-select-option>
+              <a-select-option value="2">API</a-select-option>
+              <a-select-option value="3">CSV</a-select-option>
+              <a-select-option value="3">TXT</a-select-option>
+              <a-select-option value="3">JSON</a-select-option>
             </a-select>
           </a-card>
           <div style="height: 10px"></div> -->
@@ -108,9 +107,8 @@
                 height: 400px;
               "
             >
-              <!-- <a-spin size="large" /> -->
               <a-spin :indicator="indicator1" />
-              <span style="line-height: 60px">持续收集中···</span>
+              <span style="line-height: 60px">持续监测中···</span>
             </div>
           </a-card>
         </a-col>
@@ -133,18 +131,19 @@ let data = Mock.mock({
   "a|9": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
+      "serial|+1": 10001,
+      temp: "@CFIRST",
       name() {
-        return "TXSP030" + this.key;
+        return "SJ0" + this.key;
       },
-      // "name|+1": ["电能", "水能", "天然气", "其他"],
-      "specs|+1": ["图像", "视频"],
-      "grade|+1": ["/images/", "/images/"],
-      "amount|+1": ["摄像头", "无人机", "卫星"],
-      "worker|+1": ["钢结构", "钢筋混凝土"],
-      time: new Date().toLocaleDateString(),
+      // "name|+1": ["秸秆", "秸秆", "秸秆"],
+      "specs|+1": ["传感器01", "传感器02", "传感器03"],
+      "grade|+1": ["温度", "压力", "流量"],
+      "amount|+1": ["40°C", "38Pa", "76方/s"],
+      "worker|+1": ["优", "合格"],
+      // time: new Date().toLocaleDateString(),
+      time: "@TIME('mm:ss')", //HH
     },
-    // ["增加", "降低"] ["启动", "关闭"] ["经济", "好用"] ["高级", "中级", "初级"]
   ],
 }).a;
 
@@ -189,31 +188,31 @@ export default {
         key: "serial",
       },
       {
-        title: "编号", //列头显示文字
+        title: "数据编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "类型",
+        title: "传感器",
         dataIndex: "specs",
         key: "specs",
         // slots: { customRender: "specs" },
       },
       {
-        title: "地址",
+        title: "类型",
         dataIndex: "grade",
         key: "grade",
         // slots: { customRender: "grade" },
       },
       {
-        title: "来源",
+        title: "数值",
         dataIndex: "amount",
         key: "amount",
         // slots: { customRender: "amount" },
       },
       // {
-      //   title: "建筑材料",
+      //   title: "质量",
       //   dataIndex: "worker",
       //   key: "worker",
       //   // slots: { customRender: "worker" },
@@ -236,9 +235,9 @@ export default {
     /// 工具栏
     const toolbar = [
       {
-        label: "自动收集",
+        label: "自动监测",
         event: function () {
-          alert("开始自动收集");
+          alert("自动监测成功");
         },
       },
       {
@@ -249,6 +248,7 @@ export default {
       },
       {
         label: "更多操作",
+        event: function () {},
         children: [
           {
             label: "批量导入",
@@ -269,15 +269,15 @@ export default {
     /// 行操作
     const operate = [
       {
-        label: "分享",
+        label: "查看",
         event: function () {
-          alert("分享成功");
+          alert("即将跳转页面");
         },
       },
       // {
-      //   label: "修改",
+      //   label: "驳回",
       //   event: function (record) {
-      //     alert("修改事件:" + JSON.stringify(record));
+      //     alert("驳回成功");
       //   },
       // },
       // {

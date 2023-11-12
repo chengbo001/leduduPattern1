@@ -37,8 +37,10 @@ export default {
         .scale("size", { type: "log", range: [4, 20] })
         .style("fillOpacity", 0.3)
         .style("lineWidth", 1)
-        .legend("size", false);
-
+        .legend("size", false)
+        .legend("color", { itemLabelText: "" })
+        .axis("x", { title: "" })
+        .axis("y", { title: "" });
       chart.render();
     });
     onUnmounted(() => {

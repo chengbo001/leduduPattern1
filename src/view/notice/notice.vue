@@ -42,14 +42,16 @@
             <a-list item-layout="horizontal" :data-source="data">
               <template v-slot:loadMore>
                 <div class="demo-loadmore">
-                  <a-button> 加载更多 </a-button>
+                  <a-button @click="$alert('正在加载，请稍后')">
+                    加载更多
+                  </a-button>
                 </div>
               </template>
               <template v-slot:renderItem="{ item }">
                 <a-list-item>
                   <template v-slot:actions>
                     <!-- <a>回复</a> -->
-                    <a>删除</a>
+                    <a @click="$alert('已删除')">删除</a>
                   </template>
                   <a-list-item-meta :description="item.desc">
                     <template v-slot:title>
@@ -61,7 +63,7 @@
                       />
                     </template>
                   </a-list-item-meta>
-                  <div>查看详情</div>
+                  <div @click="$alert('即将跳转页面')">查看详情</div>
                 </a-list-item>
               </template>
             </a-list>
@@ -77,7 +79,11 @@
               <a-form-item label="处理日志">
                 <a-textarea></a-textarea>
               </a-form-item>
-              <a-button type="primary" style="display: block; margin: 0 auto">
+              <a-button
+                type="primary"
+                style="display: block; margin: 0 auto"
+                @click="$alert('内容已提交')"
+              >
                 确认
               </a-button>
             </a-form>
@@ -97,11 +103,8 @@ const data = Mock.mock({
   "data|8": [
     {
       "key|+1": 1,
-      "title|1": ["交通预警JTYJ035"],
-      "desc|1": [
-        "交通可能出现拥挤，请注意调节",
-        "交通可能出现拥挤，请注意调节",
-      ],
+      "title|+1": ["疾病预警", "环境污染预警"],
+      "desc|1": ["夏季鱼群疾病高发期，请注意", "鱼群经过污染海域，请注意"],
     },
   ],
 }).data;

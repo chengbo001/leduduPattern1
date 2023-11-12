@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="系统需要能够从图像中提取出有意义的特征，如边缘、轮廓、纹理等，以便进行进一步的分析。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-input-search
@@ -32,7 +29,7 @@
                 v-if="item.field2.show"
                 :span="2"
               >
-                {{ item.field2.value }}
+                <a-badge :color="badgeColor[0]" :text="item.field2.value" />
                 <!-- <a-input-number v-model:value="inpuValue"></a-input-number>
                 当前值：{{ inpuValue }} -->
               </a-descriptions-item>
@@ -41,7 +38,7 @@
                 v-if="item.field3.show"
                 :span="3"
               >
-                <a-badge status="processing" :text="item.field2.value" />
+                <a-badge :color="badgeColor[1]" :text="item.field3.value" />
                 <!-- <a-input-number v-model:value="inpuValue"></a-input-number>
                 当前值：{{ inpuValue }} -->
               </a-descriptions-item>
@@ -50,7 +47,7 @@
                 v-if="item.field4.show"
                 :span="2"
               >
-                {{ item.field3.value }}
+                <a-badge :color="badgeColor[2]" :text="item.field4.value" />
                 <!-- <a-input-number v-model:value="inpuValue"></a-input-number>
                 当前值：{{ inpuValue }} -->
               </a-descriptions-item>
@@ -59,7 +56,7 @@
                 v-if="item.field5.show"
                 :span="3"
               >
-                {{ item.field4.value }}
+                <a-badge :color="badgeColor[3]" :text="item.field5.value" />
                 <!-- <a-input-number v-model:value="inpuValue"></a-input-number>
                 当前值：{{ inpuValue }} -->
               </a-descriptions-item>
@@ -68,7 +65,7 @@
                 v-if="item.field6.show"
                 :span="3"
               >
-                {{ item.field5.value }}
+                <a-badge :color="badgeColor[4]" :text="item.field6.value" />
                 <!-- <a-input-number v-model:value="inpuValue"></a-input-number>
                 当前值：{{ inpuValue }} -->
               </a-descriptions-item>
@@ -87,25 +84,6 @@
             </a-form>
           </a-card>
         </a-col> -->
-        <!-- <a-col :span="24">
-          <a-card>
-            <div style="display: flex; justify-content: space-around">
-              <a-button type="primary">自动调整</a-button>
-              <a-button>重置</a-button>
-            </div>
-            <div style="height: 40px"></div>
-            <div style="text-align: center">
-              根据网络覆盖和容量需求，现已自动调整<a>基站JZ0359</a>、<a>基站JZ0360</a>、<a>基站JZ0358</a>、<a>基站JZ0357</a>参数，请查看确认
-            </div>
-          </a-card>
-        </a-col> -->
-        <!-- <a-col :span="24">
-          <a-card>
-            <div style="display: flex; justify-content: space-around">
-              <a-button>下一个</a-button>
-            </div>
-          </a-card>
-        </a-col> -->
       </a-row>
       <div style="height: 10px"></div>
       <a-pagination :current="1" :total="50" show-less-items />
@@ -120,39 +98,39 @@ import {
   TrademarkCircleOutlined,
 } from "@ant-design/icons-vue";
 import { defineComponent, ref, watch } from "vue";
-
+//催收方式、催收日期、催收结果
 const data = Mock.mock({
-  "data|5": [
+  "data|3": [
     {
       field1: {
         "serail|+1": 1,
-        "key|1": ["", ""],
+        "key|+1": ["药物", "药物", "药物"],
         value: function () {
-          return "TXSP072" + this.serail;
+          return "YW0" + this.serail;
         },
       },
       field2: {
-        "key|1": "边缘",
-        "value|+1": ["景色边缘", "建筑边缘", "街道边缘"],
+        "key|1": "生产信息",
+        "value|+1": ["xx药厂", "xx药厂"],
         show: true,
       },
       field3: {
-        "key|1": "轮廓",
-        "value|+1": ["身型轮廓", "圆形轮廓", "动物轮廓"],
+        "key|1": "流通信息",
+        "value|+1": ["xx医药", "xx医药", "xx医药"],
         show: true,
       },
       field4: {
-        "key|1": "纹理",
-        "value|+1": ["绿色纹理", "彩色纹理", "灰白纹理"],
+        "key|1": "质量信息",
+        "value|+1": ["合格", "合格", "合格"],
         show: true,
       },
       field5: {
-        "key|1": "发射频率",
-        "value|+1": ["达到预定的数值", "达到预定的数值", "达到预定的数值"],
+        "key|1": "状态",
+        "value|+1": ["正常", "正常"],
         show: false,
       },
       field6: {
-        "key|1": "发射间隔",
+        "key|1": "时间",
         value:
           new Date().toLocaleDateString() +
           " " +
@@ -178,6 +156,22 @@ const switchData = Mock.mock({
   ],
 }).data;
 
+const badgeColor = [
+  "pink",
+  "red",
+  "yellow",
+  "orange",
+  "cyan",
+  "green",
+  "blue",
+  "purple",
+  "geekblue",
+  "magenta",
+  "volcano",
+  "gold",
+  "lime",
+];
+
 export default defineComponent({
   components: {
     SettingOutlined,
@@ -185,12 +179,15 @@ export default defineComponent({
   setup() {
     const title = document.title;
     const inpuValue = ref(5);
-    const formLabel = Object.keys(data[0])
-      .filter((item) => {
-        return data[0][item].serail == undefined && data[0][item].show == true;
-      })
-      .map((item) => data[0][item].key)
-      .concat(["名称"]);
+    const formLabel = ["名称"].concat(
+      Object.keys(data[0])
+        .filter((item) => {
+          return (
+            data[0][item].serail == undefined && data[0][item].show == true
+          );
+        })
+        .map((item) => data[0][item].key)
+    );
 
     return {
       title,
@@ -198,6 +195,7 @@ export default defineComponent({
       switchData,
       inpuValue,
       formLabel,
+      badgeColor,
     };
   },
 });

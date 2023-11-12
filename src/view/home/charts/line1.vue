@@ -1,4 +1,5 @@
 <template>
+  <!-- 蓝方块折线图 -->
   <div :id="chartContainer" style="width: 100%; height: 320px"></div>
 </template>
 

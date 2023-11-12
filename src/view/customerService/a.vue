@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="可以在系统内部讨论项目，并分享意见和建议。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
       <!-- 提供专业客服在线指导，解答使用过程中遇到的问题。 -->
     </page-layout>
     <page-layout>
@@ -13,7 +10,7 @@
           <a-card>
             <a-row>
               <a-col :span="20">
-                <span>{{ "群组" }}</span>
+                <span>{{ "客服" }}</span>
               </a-col>
               <a-col :span="4">
                 <a-space>
@@ -32,7 +29,8 @@
               <a-avatar size="small">
                 <template #icon><UserOutlined /></template>
               </a-avatar>
-              {{ item + "号交流群" }}
+              <!-- {{ item + "号交流群" }} -->
+              {{ "小美" }}
             </div>
           </a-card>
         </a-col>
@@ -47,8 +45,8 @@
                   border: 1px solid #f5f5f5;
                 "
               >
-                <!-- {{ "你好，在吗" }} -->
-                {{ "科技项目KJXM049提交材料不全" }}
+                {{ "你好，在吗" }}
+                <!-- {{ "任务 RW0271 进行到什么地步了？" }} -->
                 <div
                   style="
                     position: absolute;
@@ -77,8 +75,8 @@
                   border: 1px solid #f5f5f5;
                 "
               >
-                <!-- {{ "您好，很高兴为您服务，请问您想咨询什么问题？" }} -->
-                {{ "科技项目KJXM049创新性不强，市场潜力不高" }}
+                {{ "您好，很高兴为您服务，请问您想咨询什么问题？" }}
+                <!-- {{ "任务 RW0271 进行到80%" }} -->
                 <div
                   style="
                     position: absolute;

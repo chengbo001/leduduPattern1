@@ -1,12 +1,15 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="可以增强特定方向的语音信号，同时削弱其他方向的声音，从而提高所需语音的清晰度。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
+      <a-input-search
+        placeholder="请输入"
+        style="width: 400px"
+        @search="$alert('正在搜索中，请稍后')"
+      />
+      <div style="height: 10px"></div>
       <a-row :gutter="10">
         <a-col :span="24">
           <a-collapse
@@ -18,7 +21,7 @@
               :key="index"
               :header="item.header + ' ' + item.serial"
             >
-              <a-form layout="inline">
+              <a-form layout="inline" style="padding-left: 50px">
                 <a-form-item
                   v-for="(item, index) of switchData"
                   :key="index"
@@ -28,21 +31,25 @@
                     v-model:checked="item.value"
                     size="small"
                   ></a-switch>
+                  <!-- <a-button size="small" @click="$alert('已' + item.label)">
+                    {{ item.label }}
+                  </a-button> -->
                 </a-form-item>
               </a-form>
-              <template #extra
-                ><setting-outlined @click="handleClick"
-              /></template>
+              <template #extra>
+                <a-space>
+                  <a-button size="small" @click="$alert('已应用')">
+                    应用
+                  </a-button>
+                  <setting-outlined @click="handleClick" />
+                </a-space>
+              </template>
             </a-collapse-panel>
           </a-collapse>
-          <!-- <br />
-          <span>Expand Icon Position:</span>
-          <a-select v-model:value="expandIconPosition">
-            <a-select-option value="left">left</a-select-option>
-            <a-select-option value="right">right</a-select-option>
-          </a-select> -->
         </a-col>
       </a-row>
+      <div style="height: 10px"></div>
+      <a-pagination :current="1" :total="50" show-less-items />
     </page-layout>
     <page-footer></page-footer>
   </div>
@@ -50,14 +57,15 @@
 <script>
 import Mock from "better-mock";
 import { SettingOutlined } from "@ant-design/icons-vue";
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, getCurrentInstance } from "vue";
 const data = Mock.mock({
   "data|9": [
     {
       "key|+1": 1,
-      "header|+1": ["电话会议", "在线课程", "语音识别"],
+      "header|+1": ["课程01", "课程03", "课程05"],
       "serial|1": function () {
-        return "YYSB034" + this.key;
+        // return "PZ034" + this.key;
+        return "";
       },
       "text|+1": ["实时对话中已经消除不必要的声音反射。"],
     },
@@ -68,23 +76,24 @@ const switchData = Mock.mock({
   "data|4": [
     {
       "key|+1": 1,
-      "label|+1": ["上方", "下方", "左方", "右方"],
-      value: true,
+      "label|+1": ["初级", "中级", "高级", "特级"],
+      "value|+1": [false, false, true, false],
     },
   ],
 }).data;
-
 export default defineComponent({
   components: {
     SettingOutlined,
   },
   setup() {
+    const instance = getCurrentInstance();
     const title = document.title;
-    const activeKey = ref(["0"]);
+    const activeKey = ref(["0", "1", "2"]);
     const expandIconPosition = ref("right");
     const handleClick = (event) => {
       // If you don't want click extra trigger collapse, you can prevent this:
       event.stopPropagation();
+      instance.proxy.$alert("设置成功，已保存");
     };
 
     watch(activeKey, (val) => {});

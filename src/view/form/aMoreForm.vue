@@ -17,7 +17,11 @@
               <a-form-item :label="item">
                 <a-space>
                   <a-input placeholder="请输入" />
-                  <a-button size="small" v-if="item == '授权验证码'">
+                  <a-button
+                    size="small"
+                    v-if="item == '授权验证码'"
+                    @click="$alert('已发送，请注意查收')"
+                  >
                     发送
                   </a-button>
                 </a-space>
@@ -44,10 +48,11 @@
           :dataSource="data"
           :pagination="false"
           :loading="memberLoading"
+          :rowSelection="{}"
         >
           <template #operation="{}">
             <span>
-              <a @click="$alert('分享成功')">分享</a>
+              <a @click="$alert('通信中')">通信中</a>
               <!-- <a-divider type="vertical" /> -->
               <!-- <a>编辑</a>
               <a-divider type="vertical" />
@@ -146,7 +151,7 @@ export default defineComponent({
             "name|+1": function () {
               return "系统XTQ047" + this.key;
             },
-            // "name|+1": ["技术", "人才", "资金", "政策"],
+            // "name|+1": ["110", "120", "119", "其他救援"],
             "field1|+1": ["jdk.com/api/", "weui.com/api/"],
             "field2|1": ["已授权", "已授权", "已授权"],
             "field3|1": ["监测", "未监测"],

@@ -33,7 +33,8 @@ export default {
         .encode("shape", "category")
         .encode("color", "category")
         .encode("size", 5)
-        .scale("shape", { range: ["point", "plus", "diamond"] });
+        .scale("shape", { range: ["point", "plus", "diamond"] })
+        .legend("color", { itemLabelText: "" });
 
       chart.render();
     });

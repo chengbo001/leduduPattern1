@@ -29,8 +29,11 @@ export default {
         .encode("color", "sex")
         .transform({ type: "binX", y: "count" })
         .transform({ type: "stackY", orderBy: "series" })
-        .style("inset", 0.5);
-
+        .style("inset", 0.5)
+        .legend("color", { itemLabelText: "" })
+        .axis("x", { title: "" })
+        .axis("y", { title: "" });
+      // 隐藏echarts 坐标轴title 图例
       chart.render();
     });
     onUnmounted(() => {

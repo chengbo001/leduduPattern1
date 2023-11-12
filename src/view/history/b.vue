@@ -1,14 +1,16 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="展示用户的购买记录。用于给用户做多样化推荐。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
-      <a-card title="购买记录">
-        <a-input-search placeholder="请输入" style="width: 400px" />
+      <a-card title="">
+        <a-input-search
+          placeholder="请输入"
+          style="width: 400px"
+          @search="$alert('正在搜索，请稍后')"
+        />
+        <a-button @click="visible = true">创建</a-button>
         <div style="height: 10px"></div>
         <a-table
           :columns="columns"
@@ -18,9 +20,12 @@
         >
           <template #operation="{}">
             <span>
-              <a>再次购买</a>
+              <a @click="$alert('已分享')">分享</a>
               <a-divider type="vertical" />
-              <a-popconfirm title="是否要删除此行？">
+              <a-popconfirm
+                title="是否要删除此行？"
+                @confirm="$alert('已删除')"
+              >
                 <a>删除</a>
               </a-popconfirm>
             </span>
@@ -36,9 +41,24 @@
           </template>
           新增成员
         </a-button> -->
+        <div style="height: 10px"></div>
+        <a-pagination :current="1" :total="50" show-less-items />
       </a-card>
     </page-layout>
     <page-footer></page-footer>
+    <a-modal v-model:visible="visible" title="新增" @ok="$alert('提交已保存')">
+      <a-form>
+        <a-form>
+          <a-form-item
+            v-for="item of columns.map((item) => item.title)"
+            :key="item"
+            :label="item"
+          >
+            <a-input />
+          </a-form-item>
+        </a-form>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
@@ -60,7 +80,7 @@ export default defineComponent({
       // table
       columns: [
         {
-          title: "标题",
+          title: "编号",
           dataIndex: "name",
           key: "name",
           slots: { customRender: "name" },
@@ -71,47 +91,44 @@ export default defineComponent({
           key: "field1",
           slots: { customRender: "field1" },
         },
-        // {
-        //   title: "地点",
-        //   dataIndex: "field2",
-        //   key: "field2",
-        //   width: "20%",
-        //   slots: { customRender: "field2" },
-        // },
-        // {
-        //   title: "联系人",
-        //   dataIndex: "field3",
-        //   key: "field3",
-        //   width: "20%",
-        //   slots: { customRender: "field3" },
-        // },
+        {
+          title: "设备",
+          dataIndex: "field2",
+          key: "field2",
+          slots: { customRender: "field2" },
+        },
+        {
+          title: "人员",
+          dataIndex: "field3",
+          key: "field3",
+          slots: { customRender: "field3" },
+        },
+        {
+          title: "内容",
+          dataIndex: "field4",
+          key: "field4",
+          slots: { customRender: "field4" },
+        },
         {
           title: "操作",
           key: "action",
-          width: "20%",
           slots: { customRender: "operation" },
         },
       ],
       data: Mock.mock({
-        "data|6": [
+        "data|9": [
           {
-            "name|+1": [
-              "购买精准检索JZJS025次结果",
-              "购买精准检索JZJS026次结果",
-            ],
-            "field1|+1": "@DATE",
-            "field2|+1": "上海市长宁区",
-            field3: "@CNAME",
+            "name|+1": ["维护WH038", "维护WH039"],
+            "field1|+1": ["2023/10/23", "2023/10/24"],
+            "field2|+1": ["设备SB01", "设备SB02"],
+            "field3|+1": "@CNAME",
+            "field4|+1": ["备件更换", "例行检修"],
           },
         ],
       }).data,
-      // [
-      //   "供应商GYS034",
-      //   "供应商GYS035",
-      //   "供应商GYS036",
-      //   "供应商GYS037",
-      // ]
+      // ["","","","",]
       errors: [],
+      visible: false,
     });
 
     return {

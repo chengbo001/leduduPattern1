@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="提供绿色校园建设方案，包括绿色建筑、绿色交通、绿色能源等方面的建议，帮助学校实现绿色校园建设目标。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-row :gutter="10">
@@ -39,9 +36,9 @@
                 <template #extra>
                   <!-- <setting-outlined @click="handleClick" /> -->
                   <a-space>
-                    <a-button size="small" @click="$alert('已发送')"
-                      >发送</a-button
-                    >
+                    <a-button size="small" @click="$alert('已发送')">
+                      发送
+                    </a-button>
                     <a-button
                       size="small"
                       @click="$alert('已编辑成功，正在保存')"
@@ -67,7 +64,7 @@
               <a-form-item label="内容">
                 <a-input />
               </a-form-item>
-              <!-- <a-form-item label="上传照片">
+              <a-form-item label="上传资料">
                 <a-upload
                   name="avatar"
                   list-type="picture-card"
@@ -78,11 +75,13 @@
                     <div class="ant-upload-text">Upload</div>
                   </div>
                 </a-upload>
-              </a-form-item> -->
-              <!-- <a-radio-group
-                option-type="button"
-                :options="['佩戴', '未佩戴']"
-              /> -->
+              </a-form-item>
+              <a-form-item label="优先级">
+                <a-radio-group
+                  option-type="button"
+                  :options="['高', '中', '低']"
+                />
+              </a-form-item>
               <a-button
                 type="primary"
                 style="display: block; margin: 0 auto"
@@ -106,14 +105,26 @@ const data = Mock.mock({
   "data|9": [
     {
       "key|+1": 1,
-      "header|+1": ["建设方案", "建设方案"],
+      "header|+1": ["化学品泄漏应急预案", "火灾应急预案"],
       "serial|1": function () {
-        return "JSFA034" + this.key;
+        return "YA0" + this.key;
       },
       "text|+1": [
-        "绿色建筑：使用环保材料，智能化控制室内设备",
-        "绿色交通：校内多布置自行车",
-        "绿色能源：多部署太阳能设备，减少火力电源",
+        `
+          （1）发现化学品泄漏时，立即报告实验室负责人，并穿戴个人防护设备。
+          （2）根据化学品的性质和泄漏程度，选择合适的处置方法，如吸附、中和、封闭等。
+          （3）成立应急处理小组，负责组织人员撤离、现场清理和通风换气等工作。
+          （4）记录泄漏事故的原因、处理过程和结果，及时向相关部门报告。
+          （5）定期对实验室人员进行化学品泄漏应急处理的培训和演练。
+        `,
+        `
+          （1）发现火灾时，立即拨打火警电话，同时报告实验室负责人。
+          （2）组织人员紧急疏散，关闭门窗，切断电源。
+          （3）使用灭火器、消防栓等消防设施进行初期火灾扑救。
+          （4）成立应急处理小组，负责组织人员撤离、现场清理和通风换气等工作。
+          （5）记录火灾事故的原因、处理过程和结果，及时向相关部门报告。
+          （6）定期对实验室人员进行消防安全知识和灭火器使用培训，并进行消防演练。
+        `,
       ],
     },
   ],
@@ -124,8 +135,8 @@ const imageData = Mock.mock({
     {
       "key|+1": 1,
       "src|+1": [
-        "https://img0.baidu.com/it/u=1139262936,735614033&fm=253&fmt=auto&app=138&f=JPEG?w=560&h=362",
-        "https://n.sinaimg.cn/sinakd10119/356/w1807h949/20201011/abe3-kakmcxc8737526.jpg",
+        "https://img2.baidu.com/it/u=1297895811,412345726&fm=253&fmt=auto&app=138&f=JPEG?w=568&h=500",
+        "https://img2.baidu.com/it/u=1075515209,3151979884&fm=253&fmt=auto&app=138&f=GIF?w=715&h=500",
       ],
     },
   ],

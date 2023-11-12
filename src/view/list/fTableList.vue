@@ -1,19 +1,16 @@
 <template>
   <div id="table-dome">
-    <page-header
-      :title="title"
-      describe="记录一个人的心血管耐力、肌肉力量、柔韧性、平衡性、协调性等方面的状况，以及是否存在运动风险。"
-    ></page-header>
+    <page-header :title="title" describe=""></page-header>
     <page-layout>
       <a-row :gutter="10">
-        <a-col :span="6">
+        <!-- <a-col :span="6">
           <a-directory-tree
             multiple
             :tree-data="treeData"
             :expandedKeys="[1]"
             :selectedKeys="[11]"
           ></a-directory-tree>
-        </a-col>
+        </a-col> -->
         <a-col :span="18">
           <a-card>
             <a-form layout="inline">
@@ -25,9 +22,12 @@
                 <a-input></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary">检索</a-button>
+                <a-button type="primary" @click="$alert('正在搜索中，请稍后')">
+                  检索
+                </a-button>
               </a-form-item>
             </a-form>
+            <div style="height: 10px"></div>
             <p-table
               :fetch="fetch"
               :value="obj"
@@ -35,6 +35,7 @@
               :toolbar="toolbar"
               :operate="operate"
               :pagination="pagination"
+              :rowSelection="{}"
             >
               <!-- 继承至 a-table 的默认插槽 -->
               <template #name="{ record }">
@@ -54,23 +55,28 @@
             </p-table>
           </a-card>
         </a-col>
-        <!-- <a-col :span="6">
+        <a-col :span="6">
           <a-card>
             <a-form>
-              <a-form-item label="商品名称：">
+              <a-form-item
+                v-for="item of columns
+                  .filter((item) => item.id != 1)
+                  .map((item) => item.title)"
+                :key="item"
+                :label="item"
+              >
                 <a-input />
               </a-form-item>
-              <a-form-item label="工具：">
-                <a-checkbox-group
-                  :options="['优惠券', '秒杀', '限时折扣']"
-                ></a-checkbox-group>
-              </a-form-item>
-              <a-button type="primary" style="display: block; margin: 0 auto">
+              <a-button
+                type="primary"
+                style="display: block; margin: 0 auto"
+                @click="$alert('提交成功')"
+              >
                 确定
               </a-button>
             </a-form>
           </a-card>
-        </a-col> -->
+        </a-col>
       </a-row>
     </page-layout>
     <page-footer></page-footer>
@@ -80,28 +86,21 @@
 import Mock from "better-mock";
 let data = [];
 const createData = Mock.mock({
-  "a|10": [
+  "a|9": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
-      name() {
-        return "运动体测YDTC048" + this.key;
-      },
-      "specs|1": ["健康", "非健康"],
-      "grade|1": ["健康", "非健康"],
-      "amount|1": ["健康", "非健康"],
-      // worker: function () {
-      //   return "套题" + this.key;
+      "serial|+1": 10001,
+      // name() {
+      //   return "商品SP046" + this.key;
       // },
+      "name|+1": ["税务", "发票"],
+      "specs|+1": ["1000", "2000"],
+      "grade|+1": ["@CNAME", "@CNAME"],
+      "amount|+1": ["优", "良"],
       "worker|1": ["是", "否"],
       time: new Date().toLocaleDateString(),
     },
-    // [
-    //   "员工信息管理系统",
-    //   "绩效管理系统",
-    //   "员工成长系统",
-    //   "公司发展系统",
-    // ]
+
     // ["已连接", "未连接"]["高", "中", "低"]["已使用", "未使用"]["是", "否"]
   ],
 });
@@ -132,34 +131,35 @@ const treeData = Mock.mock({
 export default {
   setup() {
     const title = document.title;
-
+    //应收账款余额、账龄、逾期天数
     /// 字段
     const columns = [
       {
-        title: "编号",
+        id: 1,
+        title: "序列",
         dataIndex: "serial",
         key: "serial",
       },
       {
-        title: "体测编号", //列头显示文字
+        title: "名称", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "心血管",
+        title: "金额",
         dataIndex: "specs",
         key: "specs",
         // slots: { customRender: "specs" },
       },
       {
-        title: "肌肉力量",
+        title: "负责人",
         dataIndex: "grade",
         key: "grade",
         // slots: { customRender: "grade" },
       },
-      { title: "柔韧 平衡 协调", dataIndex: "amount", key: "amount" },
-      { title: "存在风险", dataIndex: "worker", key: "worker" },
+      // { title: "品质", dataIndex: "amount", key: "amount" },
+      // { title: "诊断", dataIndex: "worker", key: "worker" },
       { title: "时间", dataIndex: "time", key: "time" },
     ];
 
@@ -178,19 +178,20 @@ export default {
     /// 工具栏
     const toolbar = [
       {
-        label: "新增",
+        label: "批量分享",
         event: function (keys) {
-          alert("新增操作:" + JSON.stringify(keys));
+          alert("开始批量分享");
         },
       },
       {
         label: "删除",
         event: function (keys) {
-          alert("批量删除:" + JSON.stringify(keys));
+          alert("批量删除");
         },
       },
       {
         label: "更多操作",
+        event: function (keys) {},
         children: [
           {
             label: "批量导入",
@@ -213,21 +214,9 @@ export default {
       {
         label: "分享",
         event: function (record) {
-          alert("查看详情:" + JSON.stringify(record));
+          alert("分享成功");
         },
       },
-      // {
-      //   label: "删除",
-      //   event: function (record) {
-      //     alert("修改事件:" + JSON.stringify(record));
-      //   },
-      // },
-      // {
-      //   label: "查看",
-      //   event: function (record) {
-      //     alert("查看详情:" + JSON.stringify(record));
-      //   },
-      // },
       // {
       //   label: "修改",
       //   event: function (record) {

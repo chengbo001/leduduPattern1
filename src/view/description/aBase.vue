@@ -75,13 +75,13 @@ const data = Mock.mock({
   "data|10": [
     {
       "key|+1": 1,
-      "title|1": ["搜索历史", "搜索历史"],
+      "title|+1": ["参数设置", "维护保养"],
       bianhao() {
-        return "SSLS072" + this.key;
+        return "2023/10/27 8:0" + this.key;
       },
       field1: {
         "key|+1": "",
-        "value|+1": ["搜索了可以用于教育类的PPT背景图"],
+        "value|+1": ["调整了设备参数", "对设备进行了维护保养"],
       },
       field2: {
         "key|+1": "水能",
@@ -105,10 +105,11 @@ const data = Mock.mock({
     },
   ],
 }).data;
-// TODO 待处理
+
 const formLabel = Object.keys(data[0])
   .filter((item) => data[0][item]?.key)
   .map((item) => data[0][item]?.key);
+
 export default defineComponent({
   components: {
     SettingOutlined,

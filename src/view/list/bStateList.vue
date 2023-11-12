@@ -6,7 +6,11 @@
     </page-layout>
     <page-layout>
       <a-card style="text-align: center">
-        <a-result title="出现风险，请及时查看" style="padding: 0"> </a-result>
+        <a-result
+          status="warning"
+          title="出现报警，请及时处理"
+          style="padding: 0"
+        ></a-result>
       </a-card>
       <div style="height: 10px"></div>
       <a-row :gutter="10">
@@ -21,7 +25,9 @@
                 <a-input></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary">检索</a-button>
+                <a-button type="primary" @click="$alert('正在搜索中，请稍后')"
+                  >检索</a-button
+                >
               </a-form-item>
             </a-form>
             <div style="height: 10px"></div>
@@ -37,7 +43,7 @@
                 {{ record.name }}
               </template>
               <template #grade="{ record }">
-                <a-tag color="red">{{ record.grade }}</a-tag>
+                <a-tag :color="record.tagColor">{{ record.grade }}</a-tag>
               </template>
             </p-table>
           </a-card>
@@ -58,8 +64,15 @@
                 height: 400px;
               "
             >
-              <a-spin size="large" />
-              <span style="line-height: 60px">持续分析中···</span>
+              <!-- <a-spin size="large" /> -->
+              <!-- https://img.zcool.cn/community/0122725dd9eecda8012053c0703e88.gif -->
+              <!-- https://hbimg.b0.upaiyun.com/b30c5aee9f89f250d85e34f8c94094586922ef5a1b834-ZuEz0q_fw658 -->
+              <a-image
+                :preview="false"
+                style="width: 200px; height: 200px"
+                src="https://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif"
+              />
+              <span style="line-height: 60px">持续监控中···</span>
             </div>
           </a-card>
         </a-col>
@@ -74,16 +87,17 @@ import point2 from "./chartComponents/point2.vue";
 import pie1 from "./chartComponents/pie1.vue";
 import gauge1 from "./chartComponents/gauge1.vue";
 let data = Mock.mock({
-  "a|9": [
+  "a|8": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
+      "serial|+1": 10001,
       name() {
-        return "风险FX0" + this.key;
+        return "报警BJ0" + this.key;
       },
-      "specs|+1": ["节日人流拥挤", "大风大雨天气", "地区火警"],
-      "grade|1": ["警告", "危险"],
-      "amount|1": "@CNAME",
+      "specs|+1": ["产品有瑕疵", "产品质量不合格"],
+      "grade|+1": ["警告", "危险"],
+      "tagColor|+1": ["orange", "red"],
+      "amount|+1": ["调整作业任务", "安排休息"],
       "worker|1": "@CNAME",
       time: new Date().toLocaleDateString(),
       // ["正常", "异常"]
@@ -108,13 +122,13 @@ export default {
         key: "serial",
       },
       {
-        title: "风险编号", //列头显示文字
+        title: "编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "事件类型",
+        title: "内容",
         dataIndex: "specs",
         key: "specs",
       },
@@ -124,7 +138,7 @@ export default {
         key: "grade",
         slots: { customRender: "grade" },
       },
-      // { title: "安保人员", dataIndex: "amount", key: "amount" },
+      // { title: "操作建议", dataIndex: "amount", key: "amount" },
       // { title: "负责人", dataIndex: "worker", key: "worker" },
       // { title: "时间", dataIndex: "time", key: "time" },
     ];
@@ -177,9 +191,9 @@ export default {
     /// 行操作
     const operate = [
       {
-        label: "发布预警",
+        label: "已发送通知",
         event: function (record) {
-          alert("查看详情:" + JSON.stringify(record));
+          alert("已发送通知");
         },
       },
       // {

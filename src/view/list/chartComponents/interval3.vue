@@ -42,9 +42,13 @@ export default {
           d.month === "Total" ? "Total" : d.profit > 0 ? "Increase" : "Decrease"
         )
         .axis("y", { labelFormatter: "~s" })
-        .tooltip(["start", "end"]);
+        .tooltip(["start", "end"])
+        .legend("color", { itemLabelText: "" })
+        .axis("x", { title: "" })
+        .axis("y", { title: "" });
 
       chart.render();
+      chartRef.value = chart;
     });
     onUnmounted(() => {
       chartRef.value && chartRef.value.destroy();

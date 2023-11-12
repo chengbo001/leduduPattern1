@@ -1,9 +1,6 @@
 <template>
   <div>
-    <page-header
-      :title="title"
-      describe="评论与反馈用于登记您发现的问题，结果将反馈给我们工作人员"
-    ></page-header>
+    <page-header :title="title" describe=""></page-header>
     <page-layout>
       <a-card>
         <a-row type="flex" justify="center">
@@ -19,10 +16,7 @@
                 <a-input v-model:value="form.name" />
               </a-form-item>
               <a-form-item label="优先级" name="region">
-                <a-select
-                  v-model:value="form.region"
-                  placeholder="please select"
-                >
+                <a-select v-model:value="form.region" placeholder="">
                   <a-select-option value="1"> 1 </a-select-option>
                   <a-select-option value="2"> 2 </a-select-option>
                   <a-select-option value="3"> 3 </a-select-option>
@@ -49,16 +43,16 @@
             <a-list-item>
               <a-list-item-meta :description="item.info">
                 <template #title>
-                  <a href="https://www.antdv.com/">{{ item.title }}</a>
+                  <a>{{ item.title }}</a>
                 </template>
                 <template #avatar>
                   <a-avatar :src="item.avatar" />
                 </template>
               </a-list-item-meta>
               <template v-slot:actions>
-                <a>删除</a>
+                <a @click="$alert('删除成功')">删除</a>
               </template>
-              <div>查看详情</div>
+              <div @click="$alert('即将跳转页面')">查看详情</div>
             </a-list-item>
           </template>
         </a-list>
@@ -143,12 +137,12 @@ export default {
   },
   setup() {
     const data = Mock.mock({
-      "data|9": [
+      "data|6": [
         {
           avatar:
             "https://portrait.gitee.com/uploads/avatars/user/2813/8441097_shaynas_1610801433.png!avatar200",
-          title: "xx街道出现积水",
-          info: "xx街道储存已满，出现积水，请及时打开排水系统",
+          title: "系统问题反馈",
+          info: "系统操作不流畅，建议优化一下",
         },
       ],
     }).data;
@@ -163,7 +157,7 @@ export default {
       this.$refs.ruleForm
         .validate()
         .then(() => {
-          console.log("values", this.form);
+          this.$alert("提交成功");
         })
         .catch((error) => {
           console.log("error", error);

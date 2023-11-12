@@ -5,7 +5,11 @@
     </page-layout>
     <page-layout>
       <a-space>
-        <a-input-search placeholder="请输入" style="width: 400px" />
+        <a-input-search
+          placeholder="请输入"
+          style="width: 400px"
+          @search="$alert('正在搜索中，请稍后')"
+        />
         <!-- <a-button>开始校验</a-button> -->
       </a-space>
       <div style="height: 10px"></div>
@@ -23,33 +27,66 @@
                   <a-button>取消</a-button>
                 </a-space>
               </template> -->
-              <a-descriptions-item :label="item.field2.key" :span="2">
+              <a-descriptions-item
+                :label="item.field2.key"
+                v-if="item.field2.show"
+                :span="2"
+              >
                 {{ item.field2.value }}
                 <a-space style="margin-left: 30px">
-                  <a-button size="small">增加</a-button>
-                  <a-button size="small">调拨</a-button>
+                  <a-button size="small" @click="$alert('已采购')"
+                    >采购</a-button
+                  >
+                  <a-button size="small" @click="$alert('已联系')"
+                    >联系</a-button
+                  >
                 </a-space>
               </a-descriptions-item>
-              <a-descriptions-item :label="item.field3.key" :span="3">
+              <a-descriptions-item
+                :label="item.field3.key"
+                v-if="item.field3.show"
+                :span="3"
+              >
                 <a-badge status="processing" :text="item.field3.value" />
                 <a-space style="margin-left: 30px">
-                  <a-button size="small">增加</a-button>
-                  <a-button size="small">调拨</a-button>
+                  <a-button size="small" @click="$alert('已采购')"
+                    >采购</a-button
+                  >
+                  <a-button size="small" @click="$alert('已联系')"
+                    >联系</a-button
+                  >
                 </a-space>
               </a-descriptions-item>
-              <a-descriptions-item :label="item.field4.key" :span="2">
+              <a-descriptions-item
+                :label="item.field4.key"
+                v-if="item.field4.show"
+                :span="2"
+              >
                 {{ item.field4.value }}
+                <!-- TODO 数据中给模版动态渲染 badge颜色绑定数据 -->
                 <a-space style="margin-left: 30px">
-                  <a-button size="small">增加</a-button>
-                  <a-button size="small">调拨</a-button>
+                  <a-button size="small" @click="$alert('已采购')"
+                    >采购</a-button
+                  >
+                  <a-button size="small" @click="$alert('已联系')"
+                    >联系</a-button
+                  >
                 </a-space>
               </a-descriptions-item>
-              <!-- <a-descriptions-item :label="item.field5.key" :span="3">
+              <a-descriptions-item
+                :label="item.field5.key"
+                v-if="item.field5.show"
+                :span="3"
+              >
                 {{ item.field5.value }}
               </a-descriptions-item>
-              <a-descriptions-item :label="item.field6.key" :span="3">
+              <a-descriptions-item
+                :label="item.field6.key"
+                v-if="item.field6.show"
+                :span="3"
+              >
                 {{ item.field6.value }}
-              </a-descriptions-item> -->
+              </a-descriptions-item>
             </a-descriptions>
           </a-card>
         </a-col>
@@ -57,7 +94,7 @@
           <a-card>
             <a-form>
               <a-form-item
-                v-for="item of ['名称', '描述', '目标', '方法', '预期成果']"
+                v-for="item of formLabel"
                 :key="item"
                 :label="item"
               >
@@ -67,25 +104,6 @@
                 提交
               </a-button>
             </a-form>
-          </a-card>
-        </a-col> -->
-        <!-- <a-col :span="24">
-          <a-card>
-            <div style="display: flex; justify-content: space-around">
-              <a-button type="primary">自动调整</a-button>
-              <a-button>重置</a-button>
-            </div>
-            <div style="height: 40px"></div>
-            <div style="text-align: center">
-              根据网络覆盖和容量需求，现已自动调整<a>基站JZ0359</a>、<a>基站JZ0360</a>、<a>基站JZ0358</a>、<a>基站JZ0357</a>参数，请查看确认
-            </div>
-          </a-card>
-        </a-col> -->
-        <!-- <a-col :span="24">
-          <a-card>
-            <div style="display: flex; justify-content: space-around">
-              <a-button>下一个</a-button>
-            </div>
           </a-card>
         </a-col> -->
       </a-row>
@@ -108,26 +126,30 @@ const data = Mock.mock({
     {
       field1: {
         "serail|+1": 1,
-        "key|1": ["分区", "分区", "分区", "分区"],
+        "key|1": ["供应商", "供应商", "供应商"],
         value: function () {
-          return "FQ072" + this.serail;
+          return "GYS072" + this.serail;
         },
       },
       field2: {
-        "key|1": "人员",
-        "value|+1": ["20员", "20员", "20员"],
+        "key|1": "商品SP01",
+        "value|+1": ["20", "30", "35"],
+        show: true,
       },
       field3: {
-        "key|1": "物资",
-        "value|+1": ["10吨", "10吨", "10吨"],
+        "key|1": "商品SP02",
+        "value|+1": ["10", "13", "15"],
+        show: true,
       },
       field4: {
-        "key|1": "设备",
-        "value|+1": ["30台", "30台", "30台"],
+        "key|1": "商品SP03",
+        "value|+1": ["30", "20", "15"],
+        show: true,
       },
       field5: {
         "key|1": "发射频率",
         "value|+1": ["达到预定的数值", "达到预定的数值", "达到预定的数值"],
+        show: false,
       },
       field6: {
         "key|1": "发射间隔",
@@ -135,25 +157,19 @@ const data = Mock.mock({
           new Date().toLocaleDateString() +
           " " +
           new Date().toLocaleTimeString(),
+        show: false,
       },
     },
   ],
 }).data;
 
-const switchData = Mock.mock({
-  "data|5": [
-    {
-      "label|+1": [
-        "第一个目标",
-        "第二个目标",
-        "第三个目标",
-        "第四个目标",
-        "第五个目标",
-      ],
-      value: true,
-    },
-  ],
-}).data;
+const formLabel = ["名称"].concat(
+  Object.keys(data[0])
+    .filter((item) => {
+      return data[0][item].serail == undefined && data[0][item].show == true;
+    })
+    .map((item) => data[0][item].key)
+);
 
 export default defineComponent({
   components: {
@@ -165,8 +181,8 @@ export default defineComponent({
     return {
       title,
       data,
-      switchData,
       inpuValue,
+      formLabel,
     };
   },
 });

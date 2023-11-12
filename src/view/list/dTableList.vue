@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="测量缺陷的参数，如长度、宽度、面积等，并对焊缝质量进行评估。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-row :gutter="10">
@@ -12,8 +9,8 @@
           <a-directory-tree
             multiple
             :tree-data="treeData"
-            :expandedKeys="[1]"
-            :selectedKeys="[11]"
+            :expandedKeys="[]"
+            :selectedKeys="[1]"
           ></a-directory-tree>
         </a-col> -->
         <a-col :span="18">
@@ -27,7 +24,9 @@
                 <a-input></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary">检索</a-button>
+                <a-button type="primary" @click="$alert('正在搜索，请稍等')">
+                  检索
+                </a-button>
               </a-form-item>
             </a-form>
             <div style="height: 10px"></div>
@@ -43,17 +42,37 @@
               <template #name="{ record }">
                 {{ record.name }}
               </template>
+              <template #amount="{ record }">
+                <a-space>
+                  {{ record.amount }}
+                  <!-- <eye-two-tone @click="$alert('即将跳转页面')" /> -->
+                </a-space>
+              </template>
+              <template #grade="{ record }">
+                <a-space>
+                  <!-- {{ record.grade }} -->
+                  <!-- <eye-two-tone @click="$alert('即将跳转页面')" /> -->
+                  <rise-outlined />
+                </a-space>
+              </template>
+              <!-- <template #amount="{}">
+                <a-select style="width: 200px" placeholder="请选择任务">
+                  <a-select-option value="1">任务RW032</a-select-option>
+                  <a-select-option value="2">任务RW033</a-select-option>
+                  <a-select-option value="3">任务RW034</a-select-option>
+                </a-select>
+              </template> -->
             </p-table>
           </a-card>
         </a-col>
         <!-- <a-col :span="6">
           <a-card>
-            <bin-1></bin-1>
+            <interval-3></interval-3>
           </a-card>
         </a-col> -->
         <!-- <a-col :span="6">
           <a-card>
-            <a-form>
+            <a-form :label-col="{ span: 8 }">
               <a-form-item
                 v-for="item of columns
                   .filter((item) => item.id != 1)
@@ -63,7 +82,11 @@
               >
                 <a-input />
               </a-form-item>
-              <a-button type="primary" style="display: block; margin: 0 auto">
+              <a-button
+                type="primary"
+                style="display: block; margin: 0 auto"
+                @click="$alert('已保存')"
+              >
                 确定
               </a-button>
             </a-form>
@@ -80,8 +103,12 @@
                 height: 400px;
               "
             >
-              <a-spin size="large" />
-              <span style="line-height: 60px">持续评估中···</span>
+              <!-- <a-spin size="large" /> -->
+              <a-image
+                :preview="false"
+                src="https://hbimg.b0.upaiyun.com/b30c5aee9f89f250d85e34f8c94094586922ef5a1b834-ZuEz0q_fw658"
+              />
+              <span style="line-height: 60px">持续监测中···</span>
             </div>
           </a-card>
         </a-col>
@@ -93,29 +120,30 @@
 <script>
 import Mock from "better-mock";
 import bin1 from "./chartComponents/bin1.vue";
+import interval1 from "./chartComponents/interval1.vue";
+import interval2 from "./chartComponents/interval2.vue";
+import interval3 from "./chartComponents/interval3.vue";
 let data = Mock.mock({
   "a|9": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
-      "name|+1": function () {
-        return "焊缝HF046" + this.key;
+      "serial|+1": 10001,
+      // "name|+1": function () {
+      //   return "10" + this.key + "位";
+      // },
+      "name|+1": ["水", "电", "煤", "气"],
+      "specs|+1": ["35", "54"],
+      "grade|+1": ["18个月", "20个月"],
+      "amount|+1": ["90%", "94%"],
+      "worker|1": ["记录JL01", "记录JL02"],
+      // "time|+1": ["2023/11/01", "2023/10/30"],
+      // time: "@TIME('HH:mm:ss')",
+      time() {
+        return "2023/11/" + this.key;
       },
-      // "name|+1": [
-      //   "桥梁项目",
-      //   "办公楼项目",
-      //   "住宅楼项目",
-      //   "仓库项目",
-      //   "公路项目",
-      // ],
-      "specs|1-5": 1,
-      "grade|1-3": 1,
-      "amount|4-10": 1,
-      "worker|1": ["优", "良", "劣", "差"],
-      time: new Date().toLocaleDateString(),
     },
+    // ["优", "良", "劣", "差"]
   ],
-  // ["待付款", "待发货", "已发货"] ["大众", "时尚", "明星单品"] ["提前", "正常", "延期"]
 }).a;
 
 const treeData = Mock.mock({
@@ -123,7 +151,7 @@ const treeData = Mock.mock({
     {
       "index|+1": 1,
       title() {
-        return "区域QY" + this.key;
+        return "分组0" + this.key;
       },
       "key|+1": 1,
       "children|2": [
@@ -143,6 +171,9 @@ const treeData = Mock.mock({
 export default {
   components: {
     bin1,
+    interval1,
+    interval2,
+    interval3,
   },
   setup() {
     const title = document.title;
@@ -150,24 +181,40 @@ export default {
     /// 字段
     const columns = [
       {
+        id: 1,
         title: "序列",
         dataIndex: "serial",
         key: "serial",
       },
       {
-        title: "焊缝编号", //列头显示文字
+        title: "名称", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "长度",
+        title: "消耗量",
         dataIndex: "specs",
         key: "specs",
       },
-      { title: "宽度", dataIndex: "grade", key: "grade" },
-      { title: "面积", dataIndex: "amount", key: "amount" },
-      { title: "评估", dataIndex: "worker", key: "worker" },
+      {
+        title: "趋势",
+        dataIndex: "grade",
+        key: "grade",
+        slots: { customRender: "grade" },
+      },
+      {
+        title: "效率",
+        dataIndex: "amount",
+        key: "amount",
+        slots: { customRender: "amount" },
+      },
+      // {
+      //   title: "诊疗记录",
+      //   dataIndex: "worker",
+      //   key: "worker",
+      //   slots: { customRender: "amount" },
+      // },
       // { title: "时间", dataIndex: "time", key: "time" },
     ];
 
@@ -188,17 +235,18 @@ export default {
       {
         label: "新增",
         event: function (keys) {
-          alert("新增操作:" + JSON.stringify(keys));
+          alert("新增成功");
         },
       },
       {
         label: "删除",
         event: function (keys) {
-          alert("批量删除:" + JSON.stringify(keys));
+          alert("删除成功");
         },
       },
       {
         label: "更多操作",
+        event: function () {},
         children: [
           {
             label: "批量导入",
@@ -221,23 +269,24 @@ export default {
       {
         label: "查看",
         event: function (record) {
-          alert("查看详情:" + JSON.stringify(record));
+          alert("即将跳转页面");
         },
       },
       // {
       //   label: "修改",
       //   event: function (record) {
-      //     alert("修改事件:" + JSON.stringify(record));
+      //     alert("修改已保存");
       //   },
       // },
-      // {
-      //   label: "删除",
-      //   event: function (record) {
-      //     alert("删除事件:" + JSON.stringify(record));
-      //   },
-      // },
+      {
+        label: "删除",
+        event: function (record) {
+          alert("已删除");
+        },
+      },
       // {
       //   label: "更多",
+      //   event: function (record) {},
       //   children: [
       //     {
       //       label: "导出",

@@ -1,13 +1,14 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="提供最新的科技政策、项目申报等信息，帮助用户及时了解行业动态。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
-      <a-input-search placeholder="请输入" style="width: 400px" />
+      <a-input-search
+        placeholder="请输入"
+        style="width: 400px"
+        @search="$alert('正在搜索中，请稍等')"
+      />
       <div style="height: 10px"></div>
       <a-card class="card" titleN="帮助文档" :bordered="false">
         <!-- <a-input-search placeholder="请输入您的问题" style="width: 400px" /> -->
@@ -26,14 +27,16 @@
                 lineHeight: '32px',
               }"
             >
-              <a-button>加载更多</a-button>
+              <a-button @click="$alert('正在加载，请稍等')">加载更多</a-button>
             </div>
           </template>
           <template #renderItem="{ item }">
             <a-list-item>
               <template #actions>
-                <a key="list-loadmore-edit">查看</a>
-                <!-- <a key="list-loadmore-more">删除</a> -->
+                <a key="list-loadmore-edit" @click="$alert('即将跳转页面')">
+                  查看
+                </a>
+                <a key="list-loadmore-more" @click="$alert('删除成功')">删除</a>
               </template>
               <a-skeleton avatar :title="false" :loading="false" active>
                 <a-list-item-meta :description="item.desc">
@@ -124,20 +127,16 @@ export default defineComponent({
     const list2 = ref([]);
     onMounted(() => {
       list1.value = Mock.mock({
-        "data|6": [
+        "data|8": [
           {
             "key|+1": 1,
             avatar:
               "https://img0.baidu.com/it/u=1821253856,3774998416&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "title|+1": ["科技政策", "项目申报", "行业动态"],
+            "title|+1": ["一条新消息", "一条新消息", "一条新消息"],
             // title() {
             //   return "消息通知";
             // },
-            "desc|+1": [
-              "引入创新科技的公司进行税收优惠",
-              "项目申报流程简化，详情请咨询客服",
-              "xxx公司使用xxx科技产量提升10%",
-            ],
+            "desc|+1": ["检查时间到", "用药时间到", "护理时间到"],
           },
         ],
       }).data;

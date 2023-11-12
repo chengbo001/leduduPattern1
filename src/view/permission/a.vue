@@ -1,10 +1,7 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="系统可以根据不同用户的权限，设置不同的开门权限，确保出入口的安全。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-card
@@ -17,7 +14,7 @@
             <span style="font-weight: bold">{{ item.name }}</span>
           </a-col>
           <a-col :span="20">
-            <a-checkbox-group v-model:value="value" style="width: 100%">
+            <a-checkbox-group value="B" style="width: 100%">
               <a-row>
                 <a-col :span="6">
                   <a-checkbox value="A">{{ item.field1 }}</a-checkbox>
@@ -65,10 +62,10 @@ export default defineComponent({
           //   return "生产设备SCSB020" + this.key;
           // },
           name: "@CNAME",
-          field1: "各区域",
-          field2: "区域QY021",
-          field3: "区域QY082",
-          field4: "建筑JZ031",
+          field1: "管理员",
+          field2: "操作权限",
+          field3: "查看权限",
+          field4: "执行权限",
         },
       ],
     }).data;

@@ -1,45 +1,27 @@
 <template>
   <div>
     <page-layout>
-      <page-header :title="title" describe="展示以往转换的作品"></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-card class="card">
-        <a-row>
+        <a-row :gutter="[10, 10]" v-for="item of 2" :key="item">
           <a-col :span="8">
-            <video
-              class="ad-img"
-              loop=""
-              autoplay=""
-              muted=""
-              playsinline=""
-              preload="auto"
-              src="https://resd.oss-accelerate.aliyuncs.com/png3d/a1.mp4"
-            ></video>
+            <a-image
+              :src="getImageUrl('../../assets/image/sanweichongjian.png')"
+            ></a-image>
             <div>时间：2023/10/12</div>
           </a-col>
           <a-col :span="8">
-            <video
-              class="ad-img"
-              loop=""
-              autoplay=""
-              muted=""
-              playsinline=""
-              preload="auto"
-              src="https://resd.oss-accelerate.aliyuncs.com/png3d/a2.mp4"
-            ></video>
+            <a-image
+              :src="getImageUrl('../../assets/image/sanweichongjian2.png')"
+            ></a-image>
             <div>时间：2023/10/11</div>
           </a-col>
           <a-col :span="8">
-            <video
-              class="ad-img"
-              loop=""
-              autoplay=""
-              muted=""
-              playsinline=""
-              preload="auto"
-              src="https://resd.oss-accelerate.aliyuncs.com/png3d/a3.mp4"
-            ></video>
+            <a-image
+              :src="getImageUrl('../../assets/image/sanweichongjian2.png')"
+            ></a-image>
             <div>时间：2023/10/10</div>
           </a-col>
         </a-row>
@@ -68,8 +50,12 @@ export default defineComponent({
     PlusOutlined,
   },
   setup() {
+    function getImageUrl(imgSrc) {
+      return new URL(imgSrc, import.meta.url).href;
+    }
     return {
       title: document.title,
+      getImageUrl,
     };
   },
 });

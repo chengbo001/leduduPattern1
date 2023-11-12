@@ -2,17 +2,14 @@
   <!-- 表格 + 预警处理统计 用于实时监控等情况 -->
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="对盐碱地恶化情况进行预警的功能，如土壤盐分超标、干旱等情况。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-card style="text-align: center">
         <a-row>
           <a-col :span="8">
             <a-statistic
-              title="预警"
+              title="请求"
               :value="Math.floor(Math.random() * 10) + 20"
               style="margin-right: 50px"
             >
@@ -52,7 +49,9 @@
                 <a-input></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary">检索</a-button>
+                <a-button type="primary" @click="$alert('正在搜索中，请稍后')"
+                  >检索</a-button
+                >
               </a-form-item>
             </a-form>
             <div style="height: 10px"></div>
@@ -89,13 +88,13 @@ const createData = Mock.mock({
   "a|9": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
+      "serial|+1": 10001,
       name() {
-        return "土地TD690" + this.key;
+        return "请求690" + this.key;
       },
       "specs|1": ["超标", "正常"],
-      "grade|1": ["正常", "干旱", "水充足"],
-      "amount|1": ["045区域", "047区域"],
+      "grade|+1": ["退换货", "投诉处理"],
+      "amount|+1": ["045", "047"],
       "worker|1": "@CNAME",
       time: new Date().toLocaleDateString(),
     },
@@ -120,18 +119,18 @@ export default {
         key: "serial",
       },
       {
-        title: "土地编号", //列头显示文字
+        title: "编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
-      {
-        title: "土壤盐分",
-        dataIndex: "specs",
-        key: "specs",
-      },
-      { title: "干旱情况", dataIndex: "grade", key: "grade" },
-      { title: "位置", dataIndex: "amount", key: "amount" },
+      // {
+      //   title: "土壤盐分",
+      //   dataIndex: "specs",
+      //   key: "specs",
+      // },
+      { title: "情况", dataIndex: "grade", key: "grade" },
+      // { title: "位置", dataIndex: "amount", key: "amount" },
       { title: "负责人", dataIndex: "worker", key: "worker" },
       // { title: "时间", dataIndex: "time", key: "time" },
     ];
@@ -186,32 +185,15 @@ export default {
       {
         label: "推送",
         event: function (record) {
-          alert(":" + JSON.stringify(record));
+          alert("已推送给负责人");
         },
       },
       {
         label: "取消",
         event: function (record) {
-          alert(":" + JSON.stringify(record));
+          alert("已取消");
         },
       },
-      //   label: "清洗",
-      //   event: function (record) {
-      //     alert(":" + JSON.stringify(record));
-      //   },
-      // },
-      // {
-      //   label: "归一化",
-      //   event: function (record) {
-      //     alert(":" + JSON.stringify(record));
-      //   },
-      // },
-      // {
-      //   label: "自动",
-      //   event: function (record) {
-      //     alert(":" + JSON.stringify(record));
-      //   },
-      // },
       // {
       //   label: "查看",
       //   event: function (record) {

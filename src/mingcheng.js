@@ -24,4 +24,7 @@
 // 集成系统
 // 聚合平台
 
-// 策划类显示板综合管理系统 策划类显示板数据分析系统 策划类显示板数据采集系统 类似的系统名称 6个
+// 方面的，类似xxx综合管理系统 xxx设备管理系统 xxx数据采集与分析系统 xx文档管理系统 xx协同管理系统 xx监控与预警系统，xx进度跟踪管理系统，xx维护管理，这样的系统名称，给我10个
+
+// http://jb.njrsun.com ERP
+// http://www.njrsun.com:8080/inv/material/related?sort=01 ERP

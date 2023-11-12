@@ -1,21 +1,22 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="生成综合评审结果和分析报告，为项目申请者和决策者提供参考，帮助他们做出更明智的决策。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
       <div style="height: 10px"></div>
       <a-card>
         <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
           <a-form-item label="报告名称" required>
             <a-input v-model:value="modelRef.name" />
           </a-form-item>
+          <!-- <a-form-item label="样品编号" required>
+            <a-input v-model:value="modelRef.bianhao" />
+          </a-form-item> -->
           <a-form-item label="选择分类" required>
             <a-select v-model:value="modelRef.region" placeholder="可下拉选择">
-              <a-select-option value="shanghai">项目创新性</a-select-option>
-              <a-select-option value="beijing">技术可行性</a-select-option>
-              <a-select-option value="beijing">市场潜力</a-select-option>
+              <a-select-option value="shanghai">指导性</a-select-option>
+              <a-select-option value="beijing">参考性</a-select-option>
+              <a-select-option value="beijing">学术性</a-select-option>
+              <!-- <a-select-option value="beijing">医学性</a-select-option> -->
             </a-select>
           </a-form-item>
           <a-form-item label="报告类型" required>
@@ -28,10 +29,11 @@
           <a-form-item
             class="error-infos"
             :wrapper-col="{ span: 14, offset: 4 }"
-            v-bind="errorInfos"
           >
-            <a-button type="primary" @click.prevent="onSubmit">生成</a-button>
-            <a-button style="margin-left: 10px" @click="resetFields"
+            <a-button type="primary" @click.prevent="$alert('已生成并下载完成')"
+              >生成</a-button
+            >
+            <a-button style="margin-left: 10px" @click="$alert('已重置')"
               >重置</a-button
             >
           </a-form-item>
@@ -46,7 +48,7 @@
                 <a-list-item>
                   <a-list-item-meta :description="item.desc">
                     <template #title>
-                      <a href="javascript:;">{{ item.title }}</a>
+                      <a href="javascript:;">{{ item.title + "报告" }}</a>
                     </template>
                     <template #avatar>
                       <a-avatar>
@@ -64,7 +66,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, reactive, toRaw } from "vue";
 import { Form } from "ant-design-vue";
 import Mock from "better-mock";
@@ -72,8 +74,13 @@ const useForm = Form.useForm;
 const reportData = Mock.mock({
   "data|4": [
     {
-      "title|+1": ["科技项目评审报告PSBG057", "科技项目评审报告PSBG058"],
-      desc: "已经于2023/10/09下载",
+      "title|+1": ["石油化工生产", "石油化工生产"],
+      "desc|+1": [
+        "已经于2023/10/09下载",
+        "已经于2023/10/10下载",
+        "已经于2023/10/11下载",
+        "已经于2023/10/12下载",
+      ],
     },
   ],
 }).data;
@@ -82,6 +89,7 @@ export default defineComponent({
     const modelRef = reactive({
       name: "",
       region: undefined,
+      bianhao: undefined,
       type: [],
     });
     const rulesRef = reactive({
@@ -112,15 +120,7 @@ export default defineComponent({
         onValidate: (...args) => console.log(...args),
       }
     );
-    const onSubmit = () => {
-      validate()
-        .then(() => {
-          console.log(toRaw(modelRef));
-        })
-        .catch((err) => {
-          console.log("error", err);
-        });
-    };
+
     return {
       labelCol: {
         span: 4,
@@ -131,7 +131,6 @@ export default defineComponent({
       validateInfos,
       resetFields,
       modelRef,
-      onSubmit,
       reportData,
       title: document.title,
     };

@@ -1,10 +1,8 @@
 <template>
   <div>
-    <page-header
-      :title="title"
-      describe="与其他学习者进行互动，分享学习心得等，提高学习效果。"
-    ></page-header>
     <page-layout>
+      <page-header :title="title" describe=""></page-header>
+      <div style="height: 10px"></div>
       <a-card>
         <a-list
           item-layout="vertical"
@@ -13,7 +11,7 @@
           :data-source="listData"
         >
           <template v-slot:footer>
-            <div><b>好好学习</b> 天天向上</div>
+            <div><b>分享成果</b> 共同进步</div>
           </template>
           <template v-slot:renderItem="{ item }">
             <a-list-item key="item.title">
@@ -56,8 +54,8 @@ import {
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
-    href: "https://www.antdv.com/",
-    title: `我的口语学习心得`,
+    href: "",
+    title: `我的提升专注力经验`,
     avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
     description:
       "Ant Design, a design language for background applications, is refined by Ant UED Team.",

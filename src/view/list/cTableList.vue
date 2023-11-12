@@ -1,21 +1,18 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="根据缺陷的类型、大小和位置进行分类。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-row :gutter="10">
-        <a-col :span="6">
+        <!-- <a-col :span="6">
           <a-directory-tree
             multiple
             :tree-data="treeData"
             :expandedKeys="[1]"
             :selectedKeys="[1]"
           ></a-directory-tree>
-        </a-col>
+        </a-col> -->
         <a-col :span="18">
           <a-card>
             <a-form layout="inline">
@@ -27,7 +24,9 @@
                 <a-input></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary">检索</a-button>
+                <a-button type="primary" @click="$alert('正在搜索，请稍等')"
+                  >检索</a-button
+                >
               </a-form-item>
             </a-form>
             <div style="height: 10px"></div>
@@ -71,12 +70,32 @@
               >
                 <a-input />
               </a-form-item>
-              <a-button type="primary" style="display: block; margin: 0 auto">
+              <a-button
+                type="primary"
+                style="display: block; margin: 0 auto"
+                @click="$alert('提交成功')"
+              >
                 确定
               </a-button>
             </a-form>
           </a-card>
         </a-col> -->
+        <a-col :span="6">
+          <a-card>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+                height: 400px;
+              "
+            >
+              <a-spin size="large" />
+              <span style="line-height: 60px">持续处理中···</span>
+            </div>
+          </a-card>
+        </a-col>
       </a-row>
     </page-layout>
     <page-footer></page-footer>
@@ -90,22 +109,22 @@ let data = Mock.mock({
   "a|9": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
+      "serial|+1": 10001,
+      cfirst: "@CFIRST",
       "name|+1": function () {
-        return "焊缝HF050" + this.key;
+        return "服务FW0" + this.key;
       },
-      // "name|100-500": 1,
-      "specs|1": "气孔",
-      "grade|20-60": 1,
-      "amount|1": ["边部", "中部"],
-      "worker|1": "@PHONE",
-      time: new Date().toLocaleDateString(),
+      // "name|+1": ["30℃", 50, 25],
+      "specs|+1": ["高", "中", "低"],
+      "grade|+1": ["分配给李师傅", "分配给黄师傅", "分配给赵师傅"],
+      "amount|+1": ["xxx生产线", "xxx工厂"],
+      "worker|10-50": 1,
+      "total|100-500": 1,
+      // time: new Date().toLocaleDateString(),
+      time() {
+        return "2023/11/" + (20 - this.key);
+      },
     },
-    // ["已连接", "未连接"] ["已发", "未发"] ["高效", "普通", "低效"]
-    // ["平衡", "不平衡"] ["高风险", "低风险", "无风险"] ["正常", "异常"]
-    // () {
-    //   return "118.136.12.34" + this.key;
-    // }
   ],
 }).a;
 
@@ -138,7 +157,6 @@ export default {
   },
   setup() {
     const title = document.title;
-
     /// 字段
     const columns = [
       {
@@ -148,21 +166,22 @@ export default {
         key: "serial",
       },
       {
-        title: "焊缝编号", //列头显示文字
+        title: "服务编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "缺陷类型",
+        title: "优先级",
         dataIndex: "specs",
         key: "specs",
         // slots: { customRender: "specs" },
       },
-      { title: "缺陷大小", dataIndex: "grade", key: "grade" },
-      { title: "缺陷位置", dataIndex: "amount", key: "amount" },
-      // { title: "电话", dataIndex: "worker", key: "worker" },
-      // { title: "时间", dataIndex: "time", key: "time" },
+      { title: "调度", dataIndex: "grade", key: "grade" },
+      // { title: "应用案例", dataIndex: "amount", key: "amount" },
+      // { title: "单价", dataIndex: "worker", key: "worker" },
+      // { title: "金额", dataIndex: "total", key: "total" },
+      { title: "时间", dataIndex: "time", key: "time" },
     ];
 
     /// 数据来源 [模拟]
@@ -180,19 +199,26 @@ export default {
     /// 工具栏
     const toolbar = [
       {
-        label: "新增",
+        label: "自动处理",
         event: function (keys) {
-          alert("新增操作:" + JSON.stringify(keys));
+          alert("开启自动处理");
+        },
+      },
+      {
+        label: "手动处理",
+        event: function (keys) {
+          alert("开启手动处理");
         },
       },
       {
         label: "删除",
         event: function (keys) {
-          alert("批量删除:" + JSON.stringify(keys));
+          alert("删除成功");
         },
       },
       {
         label: "更多操作",
+        event: function () {},
         children: [
           {
             label: "批量导入",
@@ -213,9 +239,9 @@ export default {
     /// 行操作
     const operate = [
       {
-        label: "查看",
+        label: "已发送",
         event: function (record) {
-          alert("查看详情:" + JSON.stringify(record));
+          alert("已发送");
         },
       },
       // {

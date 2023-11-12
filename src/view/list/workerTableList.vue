@@ -1,11 +1,9 @@
 <template>
   <div id="table-dome">
-    <page-header
-      :title="title"
-      describe="管理系统用户和权限，如添加用户、分配角色等。为不同角色的人员分配不同的权限，确保数据安全和操作合规。"
-    ></page-header>
-    <!-- 管理系统用户和权限，如添加用户、分配角色等。为不同角色的人员分配不同的权限，确保数据安全和操作合规。 -->
     <page-layout>
+      <page-header :title="title" describe=""></page-header>
+      <div style="height: 10px"></div>
+      <!-- 管理系统用户和权限，如添加用户、分配角色等。为不同角色的人员分配不同的权限，确保数据安全和操作合规。 -->
       <a-row :gutter="[10, 10]">
         <a-col :span="18">
           <a-card>
@@ -18,7 +16,9 @@
                 <a-input></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary">检索</a-button>
+                <a-button type="primary" @click="$alert('正在搜索中，请稍后')">
+                  检索
+                </a-button>
               </a-form-item>
             </a-form>
             <div style="height: 12px"></div>
@@ -34,7 +34,7 @@
                 {{ record.name }}
               </template>
               <template #worker="{ record }">
-                <a-tag color="green">{{ record.worker }}</a-tag>
+                <a-tag :color="record.tagColor">{{ record.worker }}</a-tag>
               </template>
             </p-table>
           </a-card>
@@ -51,7 +51,11 @@
               >
                 <a-input />
               </a-form-item>
-              <a-button type="primary" style="display: block; margin: 0 auto">
+              <a-button
+                type="primary"
+                style="display: block; margin: 0 auto"
+                @click="$alert('已提交')"
+              >
                 提交
               </a-button>
             </a-form>
@@ -69,12 +73,13 @@ const createData = Mock.mock({
   "a|10": [
     {
       "key|+1": 0,
-      "serial|+1": 10000,
+      "serial|+1": 10001,
       name: "@CNAME",
       "age|20-60": 0,
       phone: "@PHONE",
       "grade|1": ["高", "中", "低"],
       "worker|+1": ["管理者", "操作", "查看"],
+      "tagColor|+1": ["green", "cyan", "blue"],
       time: new Date().toLocaleDateString(),
     },
   ],
@@ -131,17 +136,18 @@ export default {
       {
         label: "新增",
         event: function (keys) {
-          alert("新增操作:" + JSON.stringify(keys));
+          alert("请在右边表单中填写");
         },
       },
       {
         label: "删除",
         event: function (keys) {
-          alert("批量删除:" + JSON.stringify(keys));
+          alert("已删除");
         },
       },
       {
         label: "更多操作",
+        event: function (keys) {},
         children: [
           {
             label: "批量导入",
@@ -164,19 +170,19 @@ export default {
       {
         label: "查看",
         event: function (record) {
-          alert("查看详情:" + JSON.stringify(record));
+          alert("即将跳转页面");
         },
       },
       {
         label: "修改",
         event: function (record) {
-          alert("修改事件:" + JSON.stringify(record));
+          alert("修改完成，已保存");
         },
       },
       {
         label: "删除",
         event: function (record) {
-          alert("删除事件:" + JSON.stringify(record));
+          alert("已删除");
         },
       },
       {

@@ -2,22 +2,19 @@
   <!-- 密度热力图 -->
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="直观地展示盐碱地的空间分布和变化情况。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-card>
         <!-- <div :id="chartContainer" style="height: 600px"></div> -->
         <div>
-          <!-- <iframe
-            src="/html/more_od.html"
+          <iframe
+            src="/html/yanhuacity.html"
             frameborder="0"
             name="iframes"
             id="iframes"
             style="width: 100%; height: 800px"
-          ></iframe> -->
+          ></iframe>
         </div>
       </a-card>
       <div style="height: 10px"></div>

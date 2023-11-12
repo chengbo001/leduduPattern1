@@ -3,22 +3,24 @@
     <page-layout>
       <page-header :title="title" describe=""></page-header>
     </page-layout>
-    <!-- <a-upload-dragger
-      v-model:fileList="fileList"
-      name="file"
-      :multiple="true"
-      action=""
-      @change="handleChange"
-      @drop="handleDrop"
-    >
-      <p class="ant-upload-drag-icon">
-        <inbox-outlined></inbox-outlined>
-      </p>
-      <p class="ant-upload-text">上传资料</p>
-      <p class="ant-upload-hint">
-        支持单文件及多文件上传
-      </p>
-    </a-upload-dragger> -->
+    <!-- <page-layout>
+      <a-card>
+        <a-upload-dragger
+          v-model:fileList="fileList"
+          name="file"
+          :multiple="true"
+          action=""
+          @change="handleChange"
+          @drop="handleDrop"
+        >
+          <p class="ant-upload-drag-icon">
+            <inbox-outlined></inbox-outlined>
+          </p>
+          <p class="ant-upload-text">上传资料</p>
+          <p class="ant-upload-hint">支持单文件及多文件上传</p>
+        </a-upload-dragger>
+      </a-card>
+    </page-layout> -->
     <page-layout>
       <a-input-search
         placeholder="请输入"
@@ -30,24 +32,31 @@
         <a-row :gutter="[15, 15]">
           <a-col :span="6" v-for="item of 8" :key="item">
             <a-card hoverable>
-              <!-- <template v-slot:cover>
+              <template v-slot:cover>
                 <img
                   alt="example"
-                  src="https://img1.baidu.com/it/u=1045127384,431481083&fm=253&fmt=auto&app=138&f=JPEG?w=766&h=500"
+                  src="https://pic.quanjing.com/nd/i8/QJ8678058191.jpg@%21350h"
+                  style="width: 200px; margin: 0 auto"
                 />
-                https://pic.quanjing.com/nd/i8/QJ8678058191.jpg@%21350h
-              </template> -->
+                <!-- https://img1.baidu.com/it/u=3904400277,3071610820&fm=253&fmt=auto&app=138&f=JPEG?w=535&h=492 -->
+                <!-- https://pic.quanjing.com/nd/i8/QJ8678058191.jpg@%21350h -->
+              </template>
               <template v-slot:actions>
-                <!-- <setting-outlined key="setting" />
-                <edit-outlined key="edit" />
-                <ellipsis-outlined key="ellipsis" /> -->
-                <span @click="$alert('已开启')">开</span>
+                <!-- <setting-outlined key="setting" @click="$alert('设置已保存')" />
+                <edit-outlined key="edit" @click="$alert('已修改')" />
+                <ellipsis-outlined key="ellipsis" @click="$alert('已展开')" /> -->
+                <eye-outlined key="edit" @click="$alert('即将跳转页面')" />
+                <download-outlined @click="$alert('下载完成')" />
+                <share-alt-outlined @click="$alert('已分享')" />
+                <!-- <check-outlined key="edit" @click="$alert('已应用')" />
+                <delete-outlined key="edit" @click="$alert('已删除')" /> -->
+                <!-- <span @click="$alert('已开启')">开</span>
                 <span @click="$alert('已关闭')">关</span>
-                <span @click="$alert('自动开关')">自动</span>
+                <span @click="$alert('自动开关')">自动</span> -->
               </template>
               <a-card-meta
-                :title="'智能照明ZNZM03' + item"
-                description="位置：407教室"
+                :title="'合同HT0' + item"
+                :description="'时间：2023/10/0' + (9 - item)"
               >
                 <!-- <template v-slot:avatar>
                   <a-avatar

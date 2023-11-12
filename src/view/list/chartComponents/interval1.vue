@@ -39,9 +39,13 @@ export default {
         .encode("y", "population")
         .encode("color", "age")
         .axis("y", { labelFormatter: ".0%" })
-        .tooltip({ channel: "y0", valueFormatter: ".0%" });
-
+        .tooltip({ channel: "y0", valueFormatter: ".0%" })
+        .legend("color", { itemLabelText: "" })
+        .axis("x", { title: "" })
+        .axis("y", { title: "" });
       chart.render();
+
+      chartRef.value = chart;
     });
     onUnmounted(() => {
       chartRef.value && chartRef.value.destroy();

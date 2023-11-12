@@ -1,10 +1,7 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="提供系统的使用指南和常见问题解答。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <!-- <a-card class="card" style="text-align: center">
@@ -42,7 +39,7 @@
               <a-skeleton avatar :title="false" :loading="false" active>
                 <a-list-item-meta :description="item.desc">
                   <template #title>
-                    <a href="https://www.antdv.com/">
+                    <a>
                       {{ item.title }}
                     </a>
                   </template>
@@ -85,7 +82,7 @@
               <a-skeleton avatar :title="false" :loading="false" active>
                 <a-list-item-meta :description="item.desc">
                   <template #title>
-                    <a href="https://www.antdv.com/">
+                    <a>
                       {{ item.title }}
                     </a>
                   </template>
@@ -133,14 +130,11 @@ export default defineComponent({
             "key|+1": 1,
             avatar:
               "https://img0.baidu.com/it/u=1821253856,3774998416&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "title|+1": ["如何汇聚数据", "如何流转数据"],
+            "title|+1": ["如何保障安全", "如何保障安全"],
             // title() {
             //   return "ZHSWTP00002367" + this.key;
             // },
-            "desc|+1": [
-              "在数据采集模块进行添加设备汇聚数据",
-              "在系统集成模块进行集成其他系统，流转出数据",
-            ],
+            "desc|+1": ["注意系统内报警信息", "注意系统内报警信息"],
           },
         ],
       }).data;
@@ -150,8 +144,8 @@ export default defineComponent({
             "key|+1": 1,
             avatar:
               "https://img0.baidu.com/it/u=1821253856,3774998416&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "title|1": ["如何修改规则引擎", "如何修改告警设置"],
-            "desc|1": ["在相应的模块进行修改"],
+            "title|1": ["如何调整设备参数", "如何调整设备参数"],
+            "desc|1": ["在参数设置模块中操作"],
           },
         ],
       }).data;

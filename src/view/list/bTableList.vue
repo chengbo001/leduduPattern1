@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="在分析之前，系统需要对图像进行预处理，如去噪、对比度调整、缩放等，以便更好地提取特征。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-row :gutter="10">
@@ -69,6 +66,9 @@
               <template #name="{ record }">
                 {{ record.name }}
               </template>
+              <template #specs="{ record }">
+                <a-tag color="orange">{{ record.specs }}</a-tag>
+              </template>
               <!-- <template #grade="{}">
                 <a-select style="width: 200px" placeholder="可选择">
                   <a-select-option :value="1">荷载规范HZGF0341</a-select-option>
@@ -130,7 +130,7 @@
             >
               <a-spin size="large" />
               <!-- <a-spin :indicator="indicator1" /> -->
-              <span style="line-height: 60px">持续处理中···</span>
+              <span style="line-height: 60px">正在清洗中···</span>
             </div>
           </a-card>
         </a-col>
@@ -153,13 +153,13 @@ let data = Mock.mock({
   "a|9": [
     {
       "key|+1": 1,
-      "serial|+1": 10000,
+      "serial|+1": 10001,
       "name|+1": function () {
-        return "TXSP0390" + this.key;
+        return "SJ0390" + this.key;
       },
-      // "name|+1": ["直接排放", "间接排放", "其他"],
+      // "name|+1": ["带鱼", "三文鱼", "金枪鱼"],
       // name: "@CNAME",
-      "specs|1": ["/images/", "/images/"],
+      "specs|1": ["未处理", "未处理"],
       "grade|1": [
         "项目可行性很高",
         "项目技术可行性不高，市场潜力不大，建议再仔细研究下",
@@ -215,16 +215,16 @@ export default {
         key: "serial",
       },
       {
-        title: "编号", //列头显示文字
+        title: "数据编号", //列头显示文字
         dataIndex: "name", //列数据在数据项中对应的路径
         key: "name",
         // slots: { customRender: "name" }, //对应数据项的属性名
       },
       {
-        title: "地址",
+        title: "数据状态",
         dataIndex: "specs",
         key: "specs",
-        // slots: { customRender: "specs" },
+        slots: { customRender: "specs" },
       },
       // {
       //   title: "评审建议",
@@ -252,21 +252,39 @@ export default {
     /// 工具栏
     const toolbar = [
       {
-        label: "去噪",
+        label: "清洗",
         event: function () {
-          alert("开始进行去噪");
+          alert("开始进行清洗");
         },
       },
       {
-        label: "对比度",
+        label: "归一化",
         event: function () {
-          alert("开始调整对比度");
+          alert("开始进行归一化");
         },
       },
       {
-        label: "缩放",
+        label: "特征选择",
         event: function () {
-          alert("开始进行缩放");
+          alert("开始进行特征选择");
+        },
+      },
+      {
+        label: "缺失值处理",
+        event: function () {
+          alert("开始进行缺失值处理");
+        },
+      },
+      {
+        label: "整合",
+        event: function () {
+          alert("开始整合");
+        },
+      },
+      {
+        label: "压缩",
+        event: function () {
+          alert("开始压缩");
         },
       },
       {

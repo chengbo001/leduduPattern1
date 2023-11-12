@@ -78,6 +78,8 @@ export default {
       });
 
       columnPlot.render();
+
+      chartRef.value = columnPlot;
     });
     onUnmounted(() => {
       chartRef.value && chartRef.value.destroy();

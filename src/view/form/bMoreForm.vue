@@ -1,13 +1,10 @@
 <template>
   <div>
     <page-layout>
-      <page-header
-        :title="title"
-        describe="系统中注册的设备列表，包括设备名称、类型、状态等信息。管理物联网设备，设备监控、设备控制。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
-      <a-card class="card" title="注册" :bordered="false">
+      <a-card class="card" title="添加" :bordered="false">
         <a-form class="form" :scrollToFirstError="true">
           <a-row :gutter="16">
             <a-col
@@ -20,7 +17,11 @@
               <a-form-item :label="item">
                 <a-space>
                   <a-input placeholder="请输入" />
-                  <a-button size="small" v-if="item == '授权验证码'">
+                  <a-button
+                    size="small"
+                    v-if="item == '授权验证码'"
+                    @click="$alert('已发送，请注意查收')"
+                  >
                     发送
                   </a-button>
                 </a-space>
@@ -29,14 +30,19 @@
           </a-row>
           <a-form-item>
             <div style="text-align: center">
-              <a-button htmlType="submit" type="primary">提交</a-button>
+              <a-button
+                htmlType="submit"
+                type="primary"
+                @click="$alert('已提交')"
+                >提交</a-button
+              >
             </div>
           </a-form-item>
         </a-form>
       </a-card>
 
       <!-- table -->
-      <a-card title="设备列表">
+      <a-card title="列表">
         <a-table
           :columns="columns"
           :dataSource="data"
@@ -45,11 +51,14 @@
         >
           <template #operation="{}">
             <span>
-              <a>监控</a>
+              <!-- <a @click="$alert('已通信')">通信</a>
               <a-divider type="vertical" />
-              <a>控制</a>
-              <a-divider type="vertical" />
-              <a-popconfirm title="是否要删除此行？">
+              <a @click="$alert('已控制')">控制</a>
+              <a-divider type="vertical" /> -->
+              <a-popconfirm
+                title="是否要删除此行？"
+                @confirm="$alert('已删除')"
+              >
                 <a>删除</a>
               </a-popconfirm>
             </span>
@@ -83,14 +92,14 @@ export default defineComponent({
     PlusOutlined,
   },
   setup() {
-    const labelData = ["设备名称", "类型", "状态"];
+    const labelData = ["接口名称", "类型", "状态"];
     const state = reactive({
       loading: false,
       memberLoading: false,
       // table
       columns: [
         {
-          title: "设备名称",
+          title: "接口名称",
           dataIndex: "name",
           key: "name",
           slots: { customRender: "name" },
@@ -130,10 +139,10 @@ export default defineComponent({
           {
             "key|+1": 1,
             name() {
-              return "设备SB056" + this.key;
+              return "接口JK056" + this.key;
             },
-            "field1|+1": ["家电", "工具", "家居"],
-            "field2|+1": ["正常运行"],
+            "field1|+1": ["串行接口", "并行接口", "USB接口", "网络接口"],
+            "field2|+1": ["可连接设备"],
             "field3|1": ["开启自动", "关闭自动"],
             "field4|1": ["开启自动", "关闭自动"],
           },
@@ -153,6 +162,6 @@ export default defineComponent({
 
 <style scoped lang="less">
 .card {
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 </style>

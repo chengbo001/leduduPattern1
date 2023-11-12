@@ -1,13 +1,18 @@
 <template>
   <div>
-    <page-header
-      :title="title"
-      describe="提供丰富的词汇表和例句，帮助用户扩大词汇量，提升口语表达水平。"
-    ></page-header>
     <page-layout>
+      <page-header :title="title" describe=""></page-header>
+      <div style="height: 10px"></div>
       <a-card>
-        <a-image width="100%" :src="getImageUrl()" />
+        <a-image
+          v-for="item of 1"
+          :key="item"
+          width="100%"
+          :src="getImageUrl()"
+        />
       </a-card>
+      <!-- <div style="height: 10px"></div>
+      <a-pagination :current="1" :total="50" show-less-items /> -->
     </page-layout>
     <page-footer></page-footer>
   </div>
@@ -21,8 +26,8 @@ export default {
   },
   methods: {
     getImageUrl() {
-      return new URL(`../../assets/image/englishWord.png`, import.meta.url)
-        .href;
+      // return new URL(`../../assets/image/mapshuju.png`, import.meta.url).href;
+      return new URL(`../../assets/image/sheji.png`, import.meta.url).href;
     },
   },
 };

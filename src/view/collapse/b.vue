@@ -1,10 +1,7 @@
 <template>
   <div id="table-dome">
     <page-layout>
-      <page-header
-        :title="title"
-        describe="系统应能够检测并识别图像中的目标，如人物、车辆、建筑物等。"
-      ></page-header>
+      <page-header :title="title" describe=""></page-header>
     </page-layout>
     <page-layout>
       <a-row :gutter="10">
@@ -31,17 +28,53 @@
                     :key="index"
                     :label="item.label"
                   >
-                    <a-switch
-                      v-model:checked="item.value"
-                      size="small"
-                    ></a-switch>
+                    <div style="display: flex; justify-content: center">
+                      <a-switch
+                        v-model:checked="item.value"
+                        size="small"
+                      ></a-switch>
+                    </div>
                   </a-form-item>
                 </a-form> -->
-                <span style="display: block; text-indent: 40px">
+                <!-- <span style="display: block; text-indent: 40px">
                   {{ item.text }}
-                </span>
+                </span> -->
+                <div style="font-size: 12px">
+                  完成：<a-progress
+                    :percent="80"
+                    size="small"
+                    style="width: 600px"
+                  />
+                </div>
+                <div style="font-size: 12px">
+                  剩余：<a-progress
+                    :percent="20"
+                    size="small"
+                    style="width: 600px"
+                  />
+                </div>
+                <div style="font-size: 12px">
+                  预计时间：<a-progress
+                    :percent="100"
+                    size="small"
+                    style="width: 600px"
+                  />
+                </div>
+                <!-- <div style="font-size: 12px">
+                  孟霞进度：<a-progress
+                    :percent="98"
+                    size="small"
+                    style="width: 600px"
+                  />
+                </div> -->
+
                 <template #extra>
-                  <setting-outlined @click="handleClick" />
+                  <a-space>
+                    <a-button size="small" @click="$alert('已分享')">
+                      分享
+                    </a-button>
+                    <setting-outlined @click="handleClick" />
+                  </a-space>
                 </template>
               </a-collapse-panel>
             </a-collapse>
@@ -78,18 +111,22 @@
 <script>
 import Mock from "better-mock";
 import { SettingOutlined } from "@ant-design/icons-vue";
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, getCurrentInstance } from "vue";
 const data = Mock.mock({
-  "data|9": [
+  "data|12": [
     {
       "key|+1": 1,
       "header|1": function () {
-        return "";
+        return "项目";
       },
       "serial|1": function () {
-        return "TXSP034" + this.key;
+        return "XM0" + this.key;
       },
-      "text|+1": ["监测到图中有1个人，两辆车", "监测到图中有1个车，三栋建筑"],
+      "text|+1": [
+        "均衡饮食：保持营养均衡，多吃蔬菜、水果、粗粮等，少吃油腻、高盐、高糖的食物。",
+        "规律作息：每天保持充足的睡眠，早睡早起，避免熬夜。",
+        "适量运动：每周进行至少150分钟的中等强度运动，如快走、游泳、瑜伽等。",
+      ],
     },
     // ["电话会议", "在线课程", "语音识别"]
   ],
@@ -99,8 +136,8 @@ const switchData = Mock.mock({
   "data|5": [
     {
       "key|+1": 1,
-      "label|+1": ["咬边", "气孔", "夹渣", "裂纹", "其他问题"],
-      "value|1": [true, false],
+      "label|+1": ["访问控制", "身份验证", "加密数据", "防火墙", "入侵检测"],
+      "value|1": [true, true],
     },
   ],
 }).data;
@@ -110,12 +147,15 @@ export default defineComponent({
     SettingOutlined,
   },
   setup() {
+    const instance = getCurrentInstance();
     const title = document.title;
-    const activeKey = ref(["0", "1"]);
+    const activeKey = ref(["0", "1", "2"]);
     const expandIconPosition = ref("right");
+
     const handleClick = (event) => {
       // If you don't want click extra trigger collapse, you can prevent this:
       event.stopPropagation();
+      instance.proxy.$alert("设置成功，已保存");
     };
 
     watch(activeKey, (val) => {});

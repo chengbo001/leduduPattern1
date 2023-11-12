@@ -7,7 +7,7 @@
       <a-row>
         <a-col
           :span="24"
-          v-for="item of ['教务处', '后勤处', '学生处']"
+          v-for="item of ['安全管理部门', '设备管理部门', '环保部门']"
           :key="item"
         >
           <a-card :title="`向${item}发信息`" class="card">
@@ -67,7 +67,7 @@ const mockData = [];
 for (let i = 0; i < 5; i++) {
   mockData.push({
     key: i.toString(),
-    title: `低碳环保会议通知`,
+    title: `研讨如何确保实验室的安全和正常运行`,
     description: `description of content${i + 1}`,
   });
 }

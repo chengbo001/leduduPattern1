@@ -20,16 +20,12 @@ export default {
         padding: "auto",
         xField: "Date",
         yField: "scales",
-        xAxis: {
-          tickCount: 5,
-        },
-        slider: {
-          start: 0.1,
-          end: 0.8,
-        },
+        xAxis: false,
       });
 
       line.render();
+
+      chartRef.value = line;
     });
     onUnmounted(() => {
       chartRef.value && chartRef.value.destroy();
